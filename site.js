@@ -794,7 +794,7 @@ document.querySelectorAll('.ch-t,.mc-t,.sec-t,.cta2 h2,.h2,.dp-h h2,.mx-t').forE
   let came = false; try { came = !!sessionStorage.getItem('gl-iris'); sessionStorage.removeItem('gl-iris'); } catch (e) {}
   if (came) { const c = curtain(); hole(c, 0); D.classList.remove('iris-in');
     const open = async () => { await run(c, 0, R(), 480); c.remove(); };
-    if (document.readyState === 'complete') setTimeout(open, 40); else addEventListener('load', () => setTimeout(open, 40)); }
+    let _op=0; const go1=()=>{ if(_op) return; _op=1; setTimeout(open, 40); }; if (document.readyState !== 'loading') go1(); else addEventListener('DOMContentLoaded', go1); setTimeout(go1, 700); }
   const irisOut = async href => { try { sessionStorage.setItem('gl-iris', '1'); } catch (e) {} const c = curtain(); hole(c, R()); await run(c, R(), 0, 420); setTimeout(() => { location.href = href; }, 60); };
   window.__irisOut = href => irisOut(href);
   window.addEventListener('click', e => {
@@ -960,7 +960,7 @@ document.querySelectorAll('.esc-s').forEach(s=>{const g=s.querySelector('.esc-gr
   const m=MAP.find(x=>crumbs.includes(x[0])); const pts=[...fig.querySelectorAll('.sf-pt')];
   if(m){ hot=pts.find(p=>(p.querySelector('strong')||{}).textContent&&p.querySelector('strong').textContent.toLowerCase().includes(m[1])); }
   if(hot){ pts.forEach(p=>{ if(p!==hot) p.classList.add('dim'); }); hot.classList.add('hot'); const l=w.querySelector('.esc-list'); if(l) l.style.display='none'; } }
- else { hot=[...fig.querySelectorAll('.sf-pt')].find(p=>!p.classList.contains('off')); }
+ else { const all=[...fig.querySelectorAll('.sf-pt')].filter(p=>!p.classList.contains('off')); hot=all[0]; if(all.length>1){ all.slice(1).forEach(h=>{ const t=h.querySelector('.sf-tip'); const cap=document.createElement('p'); cap.className='where-cap'; cap.innerHTML='<b>'+h.childNodes[0].textContent.trim().padStart(2,'0')+'</b><span><strong>'+(t.querySelector('strong')||{}).textContent+'</strong><em>'+((t.querySelector('em')||{}).textContent||'')+'</em></span>'; setTimeout(()=>{ const last=[...w.querySelectorAll('.where-cap')].pop(); (last||fig).after(cap); },0); }); } }
  if(hot){ const t=hot.querySelector('.sf-tip'); const cap=document.createElement('p'); cap.className='where-cap';
   cap.innerHTML='<b>'+hot.childNodes[0].textContent.trim().padStart(2,'0')+'</b><span><strong>'+(t.querySelector('strong')||{}).textContent+'</strong><em>'+((t.querySelector('em')||{}).textContent||'')+'</em></span>'; fig.after(cap); } })();
 
@@ -974,3 +974,8 @@ document.querySelectorAll('.esc-s').forEach(s=>{const g=s.querySelector('.esc-gr
  new MutationObserver(()=>{ const on=lm.classList.contains('open'); document.documentElement.classList.toggle('lm-lock',on); }).observe(lm,{attributes:true,attributeFilter:['class']});
  const sos=lm.querySelector('.sos-menu'), ph=lm.querySelector('.lm-phone'); if(sos&&ph&&matchMedia('(max-width:760px)').matches){ ph.parentElement.insertBefore(sos,ph.nextSibling); }
  lm.addEventListener('click',e=>{ if(e.target===lm) { const x=lm.querySelector('[data-menu-close]'); x&&x.click(); } }); })();
+
+/* Лавка: отделы чередуются по порядку (оливковый / бордовый) */
+(function(){ document.querySelectorAll('body.pg-shop .dept').forEach((d,i)=>{ d.classList.add(i%2?'d-b':'d-o'); if(i>0) d.classList.add(i%2?'from-o':'from-b'); }); })();
+/* Подвал: «Связаться» — четвёртой колонкой */
+(function(){ const c=document.querySelector('.ftr-c2 .f2-contact'), cols=document.querySelector('.ftr-c2 .f2-cols'); if(c&&cols&&!cols.contains(c)) cols.appendChild(c); })();

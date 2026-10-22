@@ -5251,9 +5251,9 @@ html:has(body.pg-dlv){background:#EAE0CA!important}
 html.lm-lock,html.lm-lock body{overflow:hidden!important;touch-action:none}
 /* Лавка: отделы чередуются оливковый / бордовый, мягкий переход, без зазоров */
 body.pg-shop .dept{position:relative;isolation:isolate;background:none!important;box-shadow:none!important;clip-path:none!important;margin:0!important;padding:70px 0 60px!important}
-body.pg-shop .dept::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);z-index:-1;background:linear-gradient(to bottom,#3E4127 0,#3E4127 100%)}
-body.pg-shop .dept:nth-of-type(even)::before{background:linear-gradient(to bottom,#3E4127 0,#4A1C23 140px,#4A1C23 100%)}
-body.pg-shop .dept:nth-of-type(odd):not(:first-of-type)::before{background:linear-gradient(to bottom,#4A1C23 0,#3E4127 140px,#3E4127 100%)}
+
+
+
 body.pg-shop .esc-depts{margin-bottom:0!important}
 body.pg-shop .dept .card{background:rgba(0,0,0,.08)}
 @media (max-width:760px){body.pg-shop .esc-depts>*:last-child:nth-child(odd){grid-column:1/-1!important;justify-self:center!important}}
@@ -5281,3 +5281,20 @@ form.order label.file input{position:absolute;inset:0;opacity:0;cursor:pointer}
 }
 @media (max-width:760px){html body .liftmenu.open .lm-panel,html body .liftmenu .lm-panel{transform:none!important;left:0!important;right:0!important;top:0!important;bottom:0!important;margin:0!important;border:0!important}html body .liftmenu{inset:0!important}}
 @media (max-width:760px){html body .liftmenu .lm-keys a:not(.lm-sub) i{border-radius:50%!important}}
+
+/* ===== v108 ===== */
+body.pg-shop .dept::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);z-index:-1;background:#3E4127}
+body.pg-shop .dept.d-b::before{background:#4A1C23}
+body.pg-shop .dept.from-o.d-b::before{background:linear-gradient(to bottom,#3E4127 0,#4A1C23 70px,#4A1C23 100%)}
+body.pg-shop .dept.from-b.d-o::before{background:linear-gradient(to bottom,#4A1C23 0,#3E4127 70px,#3E4127 100%)}
+/* подвал: четыре колонки в ряд */
+@media (min-width:761px){
+ .ftr-c2 .f2-cols{display:grid!important;grid-template-columns:repeat(4,auto)!important;justify-content:center!important;column-gap:clamp(40px,6vw,96px)!important;align-items:start!important}
+ .ftr-c2 .f2-cols .f2-contact{margin:0!important;display:block!important}
+ .ftr-c2 .f2-cols .f2-contact h4{text-align:center}
+ .ftr-c2 .f2-cols .f2-contact .f2-icons{align-items:flex-start!important}
+}
+@media (max-width:760px){.ftr-c2 .f2-cols .f2-contact{margin-top:34px!important}}
+/* доставка: заголовок «Вопросы о заказе» читается */
+body.pg-dlv .del-faq h2,body.pg-dlv .del-faq .sec-t{color:#F3E4C4!important}
+body.pg-dlv .cblock h2,body.pg-dlv .cblock .cb-t{color:#F3E4C4!important}
