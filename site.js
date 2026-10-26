@@ -1,3 +1,16 @@
+/* ---------- Отправка заявок на сервер (send.php) ---------- */
+window.glRoot = (function(){ const a=document.querySelector('.hdr-logo'); try{ return new URL(a?a.getAttribute('href'):'./', location.href).href; }catch(e){ return '/'; } })();
+window.glSend = function(form, st, items){
+  if (form.dataset.busy) return; form.dataset.busy = '1'; st.textContent = 'Отправляем…';
+  const fd = new FormData(form); fd.delete('agree'); fd.append('agree', form.agree && form.agree.checked ? 'yes' : 'no');
+  fd.append('page', location.href); fd.append('form', form.id || form.className);
+  if (items && items.length) fd.append('items', JSON.stringify(items));
+  fetch(window.glRoot + 'send.php', { method: 'POST', body: fd })
+    .then(r => r.json().catch(() => ({ ok: false })))
+    .then(d => { if (d && d.ok) { st.textContent = 'Заявка отправлена. Перезвоним в течение часа.'; form.reset(); } else { st.textContent = (d && d.error) || 'Не удалось отправить. Позвоните: +7 985 481-72-28'; } })
+    .catch(() => { st.textContent = 'Не удалось отправить. Позвоните: +7 985 481-72-28'; })
+    .finally(() => { delete form.dataset.busy; });
+};
 /* GeniLift — сайт: заставка, шахта с параллаксом, двери этажей, появления, заявка, каталог */
 (() => {
   if (!/\/$|\.html$/.test(location.pathname)) { location.replace(location.pathname + '/' + location.search + location.hash); return; }
@@ -413,7 +426,7 @@
       const st = form.querySelector('.ask-status');
       if (!form.phone.value.trim()) { st.textContent = 'Укажите телефон — по нему перезвоним.'; form.phone.focus(); return; }
       if (!form.agree.checked) { st.textContent = 'Отметьте согласие на обработку данных.'; return; }
-      st.textContent = 'Демо: отправка заработает после подключения сервера.';
+      window.glSend(form, st);
     });
   });
 })();
@@ -563,7 +576,7 @@
     if (!form.phone.value.trim()) { st.textContent = 'Укажите телефон — по нему перезвоним.'; form.phone.focus(); return; }
     if (!form.agree.checked) { st.textContent = 'Отметьте согласие на обработку данных.'; return; }
     if (!cart.length && !form.photo.files[0] && !form.msg.value.trim()) { st.textContent = 'Добавьте деталь, фото или опишите задачу.'; return; }
-    st.textContent = 'Демо: отправка заработает после подключения сервера.';
+    window.glSend(form, st, cart);
   });
   render();
 
@@ -979,3 +992,17 @@ document.querySelectorAll('.esc-s').forEach(s=>{const g=s.querySelector('.esc-gr
 (function(){ document.querySelectorAll('body.pg-shop .dept').forEach((d,i)=>{ d.classList.add(i%2?'d-b':'d-o'); if(i>0) d.classList.add(i%2?'from-o':'from-b'); }); })();
 /* Подвал: «Связаться» — четвёртой колонкой */
 (function(){ const c=document.querySelector('.ftr-c2 .f2-contact'), cols=document.querySelector('.ftr-c2 .f2-cols'); if(c&&cols&&!cols.contains(c)) cols.appendChild(c); })();
+
+/* Ловушка для ботов в формах */
+document.querySelectorAll('form.order, form[data-ask]').forEach(f=>{ if(f.querySelector('[name=website]')) return; const i=document.createElement('input'); i.type='text'; i.name='website'; i.tabIndex=-1; i.autocomplete='off'; i.setAttribute('aria-hidden','true'); i.style.cssText='position:absolute;left:-9999px;width:1px;height:1px;opacity:0'; f.appendChild(i); });
+/* Cookie-баннер и Яндекс Метрика (номер счётчика — в config.js) */
+(function(){ const s=document.createElement('script'); s.src=window.glRoot+'config.js'; s.onload=s.onerror=init; document.head.appendChild(s);
+ function metrika(){ const id=(window.GL_CONFIG||{}).metrika; if(!id||window.ym) return;
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+  window.ym(id,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:false}); }
+ function init(){ let c=null; try{ c=localStorage.getItem('gl-cookie'); }catch(e){}
+  if(c==='all'){ metrika(); return; } if(c==='need') return;
+  const cfg=window.GL_CONFIG||{}; const b=document.createElement('div'); b.className='ck-bar'; b.setAttribute('role','dialog'); b.setAttribute('aria-label','Файлы cookie');
+  b.innerHTML='<p>Мы используем файлы cookie и сервис Яндекс Метрика, чтобы сайт работал и становился удобнее. Подробнее — в <a href="'+window.glRoot+(cfg.cookiePage||'politika/')+'">политике</a>.</p><div><button type="button" data-ck="need">Только необходимые</button><button type="button" data-ck="all">Принять</button></div>';
+  document.body.appendChild(b); requestAnimationFrame(()=>b.classList.add('on'));
+  b.addEventListener('click',e=>{ const k=e.target.closest('[data-ck]'); if(!k) return; try{ localStorage.setItem('gl-cookie',k.dataset.ck); }catch(_){} b.classList.remove('on'); setTimeout(()=>b.remove(),400); if(k.dataset.ck==='all') metrika(); }); } })();

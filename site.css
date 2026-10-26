@@ -5298,3 +5298,11 @@ body.pg-shop .dept.from-b.d-o::before{background:linear-gradient(to bottom,#4A1C
 /* доставка: заголовок «Вопросы о заказе» читается */
 body.pg-dlv .del-faq h2,body.pg-dlv .del-faq .sec-t{color:#F3E4C4!important}
 body.pg-dlv .cblock h2,body.pg-dlv .cblock .cb-t{color:#F3E4C4!important}
+/* ===== v109: cookie-баннер ===== */
+.ck-bar{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:400;max-width:760px;margin:0 auto;display:flex;gap:16px 22px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:16px 20px;background:rgba(21,19,17,.96);border:1px solid rgba(201,161,90,.55);color:#E9DCC3;box-shadow:0 10px 40px rgba(0,0,0,.35);transform:translateY(140%);transition:transform .45s ease}
+.ck-bar.on{transform:none}
+.ck-bar p{margin:0;flex:1 1 300px;font:400 14px/1.5 var(--fut,Jost)}
+.ck-bar a{color:#E8B53A}
+.ck-bar div{display:flex;gap:10px;flex:none}
+.ck-bar button{padding:10px 16px;background:none;border:1px solid rgba(201,161,90,.6);color:#E9DCC3;font:600 11px var(--fut,Jost);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.ck-bar button[data-ck="all"]{background:#E8B53A;border-color:#E8B53A;color:#1C1915}
