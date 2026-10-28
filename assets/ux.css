@@ -138,3 +138,8 @@ body.pg-brand .bp-find{margin:0 0 14px;font-size:16px;line-height:1.6;color:#F6E
 .bp-others a:hover{border-color:#E8B53A;color:#E8B53A}
 @media (max-width:760px){.bp-steps{grid-template-columns:1fr}body.pg-brand .bp-stat{font-size:16px}}
 .brandstrip .bs-all{display:inline-flex;align-items:center;min-height:40px;margin-top:10px;font:600 13px var(--sans);letter-spacing:.08em;color:#E8B53A;text-decoration:none;border-bottom:1px solid rgba(232,181,58,.6)}
+
+/* мелкие подписи внутри кнопок */
+html body .tag-btn span{font-size:12px!important;letter-spacing:.08em!important}
+html body .em-btn span,html body .kind a span,html body .acc-t span,html body .viz-cap{font-size:12.5px!important}
+html body .hdr-logo i{font-size:9px!important;letter-spacing:.12em!important}
