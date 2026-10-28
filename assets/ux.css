@@ -143,3 +143,26 @@ body.pg-brand .bp-find{margin:0 0 14px;font-size:16px;line-height:1.6;color:#F6E
 html body .tag-btn span{font-size:12px!important;letter-spacing:.08em!important}
 html body .em-btn span,html body .kind a span,html body .acc-t span,html body .viz-cap{font-size:12.5px!important}
 html body .hdr-logo i{font-size:9px!important;letter-spacing:.12em!important}
+
+/* ---------- телефон: верхний блок страниц компактнее (больше полезного на первом экране) ---------- */
+@media (max-width:760px){
+ html body.pg .page > .wrap > .psign,html body.pg .page > .wrap > .psign.ttl-band,html body.pg .psign{padding:22px 16px 24px!important;margin-top:20px!important;margin-bottom:34px!important}
+ html body .psign .mx-bar{margin-top:12px!important;transform:scale(.85)}
+ html body .psign .mx-sub{margin-top:10px!important;font-size:15px!important;line-height:1.42!important}
+ html body .psign .ttl-icons{margin-top:14px!important}
+ html body .psign .search{margin-top:16px!important}
+ html body .psign .kind{margin-top:14px!important}
+ html body .psign .brandstrip{margin-top:12px!important}
+ html body .psign .mx-head .mx-floor{margin-bottom:2px}
+ html body .phcta{margin-top:14px;padding:10px 14px;gap:12px;min-height:0}
+ html body .phcta svg{flex-basis:30px;width:30px;height:30px}
+ html body .phcta span{flex:1 1 150px;font-size:13px;line-height:1.35}
+ html body .phcta b{font-size:13.5px}
+ html body .phcta i{display:none}
+ html body .crumbs{margin-top:0}
+}
+@media (max-width:760px){
+ /* хлебные крошки на телефоне: только два последних шага, чтобы помещались в одну строку */
+ html body .crumbs li:not(:nth-last-child(-n+2)){display:none}
+ html body .crumbs li:nth-last-child(2)::before{display:none!important}
+}
