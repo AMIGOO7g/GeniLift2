@@ -1,5 +1,5 @@
 /* ---------- Отправка заявок на сервер (send.php) ---------- */
-window.glRoot = (function(){ const a=document.querySelector('.hdr-logo'); try{ return new URL(a?a.getAttribute('href'):'./', location.href).href; }catch(e){ return '/'; } })();
+window.glRoot = (function(){ const a=document.querySelector('.hdr-logo'); try{ return new URL(a?a.getAttribute('href'):'./', location.href).href.replace(/index\.html$/, ''); }catch(e){ return '/'; } })();
 window.glSend = function(form, st, items){
   if (form.dataset.busy) return; form.dataset.busy = '1'; st.textContent = 'Отправляем…';
   const fd = new FormData(form); fd.delete('agree'); fd.append('agree', form.agree && form.agree.checked ? 'yes' : 'no');
@@ -962,7 +962,8 @@ document.querySelectorAll('.esc-s').forEach(s=>{const g=s.querySelector('.esc-gr
  const esc=t=>t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
  inp.addEventListener('input',()=>{ const q=inp.value.trim().toLowerCase(); if(q.length<2){box.innerHTML='';return;} load().then(d=>{ const out=[];
   d.s.filter(x=>x.t.toLowerCase().includes(q)).slice(0,3).forEach(x=>out.push([x.t,x.k,x.u]));
-  BR.filter(b=>b.toLowerCase().includes(q)).slice(0,2).forEach(b=>out.push([b,'Марка','zapchasti/?q='+encodeURIComponent(b)]));
+  const BP={'Hitachi':'hitachi','KONE':'kone','OTIS':'otis','LG Sigma':'lg-sigma','Mitsubishi':'mitsubishi','ThyssenKrupp':'thyssenkrupp','Hyundai':'hyundai','Schindler':'schindler','Gustav Wolf':'gustav-wolf','Draka':'draka','Fujitec':'fujitec'};
+  BR.filter(b=>b.toLowerCase().includes(q)).slice(0,2).forEach(b=>out.push([b,'Марка',BP[b]?'brendy/'+BP[b]+'/':'zapchasti/?q='+encodeURIComponent(b)]));
   SRV.filter(x=>x[0].toLowerCase().includes(q)).slice(0,2).forEach(x=>out.push([x[0],'Услуга',x[1]]));
   d.p.filter(x=>x.t.toLowerCase().includes(q)).slice(0,8-out.length).forEach(x=>out.push([x.t,'Деталь',x.u]));
   box.innerHTML=out.slice(0,8).map(o=>'<a href="'+base+o[2]+'"><span>'+esc(o[0])+'</span><em>'+o[1]+'</em></a>').join('')||'<p>Ничего не нашли — нажмите «Найти» или пришлите фото шильдика</p>'; }); });

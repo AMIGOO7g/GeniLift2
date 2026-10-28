@@ -1,0 +1,17 @@
+{
+  "_comment": "Данные организации для микроразметки (schema.org). Пустые поля в разметку не попадают. После заполнения запустите: python3 tools/build_schema.py",
+  "name": "GeniLift",
+  "legalName": "",
+  "url": "https://genilift.ru",
+  "logo": "https://genilift.ru/assets/logo.png",
+  "image": "https://genilift.ru/assets/og.jpg",
+  "description": "Запчасти для лифтов и эскалаторов, подбор по фото шильдика, монтаж и обслуживание. Москва и область, доставка по России.",
+  "telephone": "+7 985 481-72-28",
+  "email": "t7284614@yandex.ru",
+  "sameAs": ["https://t.me/K_Vlad888", "https://wa.me/79854817228"],
+  "areaServed": "Москва и Московская область, доставка запчастей по России",
+  "taxID": "",
+  "address": {"streetAddress": "", "addressLocality": "Москва", "postalCode": "", "addressCountry": "RU"},
+  "geo": {"latitude": "", "longitude": ""},
+  "openingHours": []
+}

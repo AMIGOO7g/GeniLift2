@@ -109,3 +109,21 @@ html body main .ph .ph-side .btn-fill[type=submit]{align-self:center;margin:8px 
  body.home-bld .hbar{left:50%;right:auto;width:min(640px,100%);transform:translateX(-50%);border-left:1px solid rgba(242,194,48,.45);border-right:1px solid rgba(242,194,48,.45)}
 }
 @media (max-width:900px){#bld a.note{display:none!important}}
+
+/* подбор по фото: «сканирование» и результат-бирка */
+.ph-frame{position:relative;overflow:hidden}
+.ph-frame img{display:block}
+.ph-laser{position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,transparent,#FFD457,transparent);box-shadow:0 0 14px 4px rgba(255,212,87,.55);opacity:0;pointer-events:none}
+.ph-frame.scanning .ph-laser{opacity:1;animation:phscan 1.7s ease-in-out infinite alternate}
+@keyframes phscan{from{top:0}to{top:calc(100% - 3px)}}
+.ph-cn{position:absolute;width:22px;height:22px;border:3px solid #FFD457;pointer-events:none;opacity:0;transition:opacity .3s}
+.ph-frame.scanning .ph-cn{opacity:1}
+.ph-cn.c1{left:8px;top:8px;border-right:0;border-bottom:0}.ph-cn.c2{right:8px;top:8px;border-left:0;border-bottom:0}
+.ph-cn.c3{left:8px;bottom:8px;border-right:0;border-top:0}.ph-cn.c4{right:8px;bottom:8px;border-left:0;border-top:0}
+html.calm .ph-laser{animation:none!important;top:50%}
+.ph-hits a{border:2px dashed rgba(232,181,58,.7);background:rgba(246,235,213,.07)}
+.ph-hits a span{display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.3}
+.ph-hits a span b{font:800 15px var(--fut,var(--sans));letter-spacing:.06em;color:#FFD457}
+.ph-hits .ph-ok{align-self:center;padding:2px 10px;border:2px solid #7FD6A8;border-radius:3px;color:#7FD6A8;font:800 11px var(--fut,var(--sans));letter-spacing:.14em;text-transform:uppercase;transform:rotate(-3deg)}
+.ph-empty{display:contents}
+.ph-drop.has .ph-empty{display:none}

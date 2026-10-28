@@ -6,6 +6,7 @@
   const BASE = new URL('./', me ? me.src : location.href).href;          // .../assets/
   const $ = s => f.querySelector(s);
   const drop = $('#phDrop'), prevImg = $('#phImg'), prevName = $('#phName'), st = $('#phSt');
+  const frame = $('#phFrame');
   const ocrBox = $('#phOcr'), ocrBtn = $('#phOcrBtn'), ocrSt = $('#phOcrSt'), ocrBar = $('#phOcrBar'), hits = $('#phHits');
   const main = f.photo, MAXSIDE = 1800;
   { const t = document.createElement('input'); t.type = 'text'; t.name = 'website'; t.tabIndex = -1; t.autocomplete = 'off'; t.setAttribute('aria-hidden', 'true'); t.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;opacity:0'; f.appendChild(t); }   // ловушка для ботов
@@ -90,7 +91,7 @@
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   ocrBtn.addEventListener('click', async () => {
     if (!current || ocrBtn.disabled) return;
-    ocrBtn.disabled = true; hits.innerHTML = ''; ocrBar.classList.add('on'); ocrBar.firstElementChild.style.width = '4%';
+    ocrBtn.disabled = true; hits.innerHTML = ''; frame.classList.add('scanning'); ocrBar.classList.add('on'); ocrBar.firstElementChild.style.width = '4%';
     try {
       ocrSt.textContent = worker ? 'Читаем фото…' : 'Загружаем распознавание (один раз, около 11 МБ)…';
       const w = await getWorker();
@@ -107,7 +108,7 @@
       }
       if (found.length) {
         ocrSt.textContent = 'Похоже, это — проверьте и откройте. Инженер всё равно сверит артикул перед заказом.';
-        hits.innerHTML = found.map(x => '<li><a href="../zapchasti/' + esc(x.v[0]) + '/"><span>' + esc(x.v[2] || x.k) + '</span><em>Открыть →</em></a></li>').join('');
+        hits.innerHTML = found.map(x => '<li><a href="../zapchasti/' + esc(x.v[0]) + '/"><span><b>' + esc(x.k) + '</b>' + esc(x.v[2] || x.k) + '</span><em class="ph-ok">Найдено</em></a></li>').join('');
       } else if (toks.length) {
         ocrSt.textContent = 'Распознали: ' + toks.slice(0, 6).join(', ') + '. В каталоге точного совпадения нет — отправьте заявку, инженер подберёт.';
       } else {
@@ -115,7 +116,7 @@
       }
     } catch (e) {
       ocrSt.textContent = 'Не удалось распознать автоматически. Отправьте заявку — инженер определит по фото сам.';
-    } finally { ocrBtn.disabled = false; setTimeout(() => ocrBar.classList.remove('on'), 800); }
+    } finally { frame.classList.remove('scanning'); ocrBtn.disabled = false; setTimeout(() => ocrBar.classList.remove('on'), 800); }
   });
 
   /* ---------- Отправка ---------- */

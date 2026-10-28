@@ -99,6 +99,8 @@ function gen_page(array $p, array $ex): string
 
     $A = str_replace('assets/parts/' . $i['img'], 'assets/parts/@@IMG@@', $A);
     $A = str_replace(['zapchasti/' . $i['slug'] . '/', '&quot;' . $i['slug'] . '&quot;'], ['zapchasti/@@SLUG@@/', '&quot;@@SLUG@@&quot;'], $A);
+    $descPlain = html_entity_decode((string)$i['desc'], ENT_QUOTES, 'UTF-8');
+    if ($descPlain !== '') $A = str_replace($descPlain, '@@DESCJ@@', $A);                // описание в структурированных данных
     $A = str_replace('<p class="mx-sub">' . $i['desc'] . '</p>', '<p class="mx-sub">@@DESC@@</p>', $A);
     $A = preg_replace('~(<th scope="row">Тип</th><td>).*?(</td>)~u', '${1}@@TYPE@@${2}', $A) ?? $A;
     $A = str_replace($i['sec'], '@@SEC@@', $A);
@@ -111,7 +113,7 @@ function gen_page(array $p, array $ex): string
     $A = preg_replace('~(<th scope="row">Цена</th><td>).*?(</td>)~u', '${1}@@PR@@${2}', $A) ?? $A;
 
     $A = strtr($A, [
-        '@@IMG@@' => h($img), '@@SLUG@@' => h($p['slug']), '@@DESC@@' => h($desc), '@@SEC@@' => h($sec),
+        '@@DESCJ@@' => trim((string)json_encode($desc, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), '"'), '@@IMG@@' => h($img), '@@SLUG@@' => h($p['slug']), '@@DESC@@' => h($desc), '@@SEC@@' => h($sec),
         '@@TYPE@@' => h($type), '@@TYPEL@@' => h($lc($type)), '@@BRAND@@' => h($p['brand']), '@@BRANDL@@' => h($lc($p['brand'])),
         '@@SKU@@' => h($p['sku']), '@@SKUL@@' => h($lc($p['sku'])), '@@OPIS@@' => (string)(1000 + crc32($p['sku']) % 9000),
         '@@CAT@@' => $cat, '@@AV@@' => h($av), '@@PR@@' => h($pr),
@@ -231,6 +233,7 @@ function build_all(): array
         if (is_file($f) && strpos((string)file_get_contents($f), 'genilift-admin') !== false) { @unlink($f); @rmdir(dirname($f)); $log[] = "Снята страница: $slug"; }
     }
     $cards = patch_catalog($byCat);
+    foreach (build_pages() as $l) $log[] = $l;
 
     wr('assets/live.json', json_encode(['v' => time(), 'p' => (object)$live], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 
@@ -266,3 +269,5 @@ function build_all(): array
     $log[] = 'Готово: товаров в базе — ' . count($all) . ', с ценой или наличием — ' . count($live) . ', новых страниц — ' . count($now) . ', карточек в каталоге добавлено — ' . $cards . '.';
     return $log;
 }
+
+require_once __DIR__ . '/brands.php';
