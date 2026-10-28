@@ -155,7 +155,7 @@ html body .hdr-logo i{font-size:9px!important;letter-spacing:.12em!important}
 
 /* ---------- телефон: верхний блок страниц компактнее (больше полезного на первом экране) ---------- */
 @media (max-width:760px){
- html body.pg .page > .wrap > .psign,html body.pg .page > .wrap > .psign.ttl-band,html body.pg .psign{padding:22px 16px 24px!important;margin-top:20px!important;margin-bottom:60px!important}
+ html body.pg .page > .wrap > .psign,html body.pg .page > .wrap > .psign.ttl-band,html body.pg .psign{padding:22px 16px 24px!important;margin-top:20px!important;margin-bottom:28px!important}
  html body .psign .mx-bar{margin-top:12px!important;transform:scale(.85)}
  html body .psign .mx-sub{margin-top:10px!important;font-size:15px!important;line-height:1.42!important}
  html body .psign .ttl-icons{margin-top:14px!important}
@@ -203,3 +203,26 @@ html body .m-acc .acc-t i{font-size:15px!important}
 
 /* подпись «Карточка детали» не должна попадать на границу тёмной полосы шапки (полоса уходит на 30px ниже заголовка) */
 body.pg-shop .card-k{margin-top:56px!important;position:relative;z-index:6}
+
+html body.pg .title-prod .psign{margin-bottom:10px!important}
+
+/* название этажа в табло шапки — в одну строку */
+.gf-t{white-space:nowrap;max-width:none!important;letter-spacing:.1em!important}
+
+/* корзина: блоки не прилипают к шапке страницы */
+body.pg-shop .cartp{margin-top:36px}
+
+/* страницы марок и разделов: крупнее текст, всё по центру, плитки без обрезанных слов */
+body.pg-brand .bp-stat{font-size:18px!important;max-width:860px}
+body.pg-brand .bp-chips a,body.pg-brand .bp-chips span{font-size:14.5px;min-height:44px;padding:0 18px}
+body.pg-brand .bp-h{text-align:center!important}
+body.pg-brand .bp-steps{max-width:980px;margin:0 auto}
+body.pg-brand .bp-steps li{align-items:center;text-align:left;font-size:16px}
+body.pg-brand .bp-find{text-align:center;font-size:17px}
+.bp-tile b{font-size:17px;overflow-wrap:break-word;hyphens:auto;line-height:1.2}
+.bp-tile span{font-size:14.5px}
+.bp-tiles{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+body.pg-brand .bp-others{justify-content:center}
+body.pg-brand .bp-others p{text-align:center}
+@media (max-width:760px){body.pg-brand .bp-stat{font-size:16px!important}}
+@media (max-width:760px){html body.pg.pg-dlv .page > .wrap > .psign{margin-bottom:0!important}}
