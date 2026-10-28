@@ -43,6 +43,7 @@
     try { const dt = new DataTransfer(); dt.items.add(out); main.files = dt.files; } catch (e) { /* старый браузер: уйдёт файл из основного поля */ }
     prevImg.src = loaded ? loaded.u : URL.createObjectURL(out);
     prevName.textContent = out.name + ' · ' + (out.size / 1048576 < 1 ? Math.max(1, Math.round(out.size / 1024)) + ' КБ' : (out.size / 1048576).toFixed(1) + ' МБ');
+    if (window.glGoal) window.glGoal('photo_selected');
     drop.classList.add('has'); ocrBox.classList.add('on'); hits.innerHTML = ''; ocrSt.textContent = '';
   }
   function clearFile() {
@@ -91,6 +92,7 @@
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   ocrBtn.addEventListener('click', async () => {
     if (!current || ocrBtn.disabled) return;
+    if (window.glGoal) window.glGoal('photo_ocr');
     ocrBtn.disabled = true; hits.innerHTML = ''; frame.classList.add('scanning'); ocrBar.classList.add('on'); ocrBar.firstElementChild.style.width = '4%';
     try {
       ocrSt.textContent = worker ? 'Читаем фото…' : 'Загружаем распознавание (один раз, около 11 МБ)…';
@@ -106,6 +108,7 @@
         const t = f.msg, add = 'Распознано на фото: ' + toks.join(', ');
         if (t.value.indexOf('Распознано на фото:') < 0) t.value = (t.value ? t.value + '\n' : '') + add;
       }
+      if (found.length && window.glGoal) window.glGoal('photo_ocr_found');
       if (found.length) {
         ocrSt.textContent = 'Похоже, это — проверьте и откройте. Инженер всё равно сверит артикул перед заказом.';
         hits.innerHTML = found.map(x => '<li><a href="../zapchasti/' + esc(x.v[0]) + '/"><span><b>' + esc(x.k) + '</b>' + esc(x.v[2] || x.k) + '</span><em class="ph-ok">Найдено</em></a></li>').join('');

@@ -7,7 +7,7 @@ window.glSend = function(form, st, items){
   if (items && items.length) fd.append('items', JSON.stringify(items));
   fetch(window.glRoot + 'send.php', { method: 'POST', body: fd })
     .then(r => r.json().catch(() => ({ ok: false })))
-    .then(d => { if (d && d.ok) { st.textContent = 'Заявка отправлена. Перезвоним в течение часа.'; form.reset(); } else { st.textContent = (d && d.error) || 'Не удалось отправить. Позвоните: +7 985 481-72-28'; } })
+    .then(d => { if (d && d.ok) { st.textContent = 'Заявка отправлена. Перезвоним в течение часа.'; if (window.glGoal) { window.glGoal('lead', { form: form.id || form.className }); if (form.id === 'photoForm') window.glGoal('lead_photo'); } form.reset(); } else { st.textContent = (d && d.error) || 'Не удалось отправить. Позвоните: +7 985 481-72-28'; } })
     .catch(() => { st.textContent = 'Не удалось отправить. Позвоните: +7 985 481-72-28'; })
     .finally(() => { delete form.dataset.busy; });
 };
@@ -1001,7 +1001,7 @@ document.querySelectorAll('form.order, form[data-ask]').forEach(f=>{ if(f.queryS
 (function(){ const s=document.createElement('script'); s.src=window.glRoot+'config.js'; s.onload=s.onerror=init; document.head.appendChild(s);
  function metrika(){ const id=(window.GL_CONFIG||{}).metrika; if(!id||window.ym) return;
   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
-  window.ym(id,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:false}); }
+  window.ym(id,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:!!(window.GL_CONFIG||{}).metrikaWebvisor}); }
  function init(){ let c=null; try{ c=localStorage.getItem('gl-cookie'); }catch(e){}
   if(c==='all'){ metrika(); return; } if(c==='need') return;
   const cfg=window.GL_CONFIG||{}; const b=document.createElement('div'); b.className='ck-bar'; b.setAttribute('role','dialog'); b.setAttribute('aria-label','Файлы cookie');
