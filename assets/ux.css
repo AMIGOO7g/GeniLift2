@@ -1,0 +1,99 @@
+/* GeniLift — удобство и читаемость поверх основного оформления.
+   Правила: текст не мельче 12–13 px, зоны нажатия от 40 px, подвал читается, фирменная «оболочка» сохраняется. */
+
+/* ---------- читаемость ---------- */
+html body .crumbs,html body .crumbs *{font-size:12.5px!important}
+html body .mx-floor,html body .eb-k,html body .ar-k,html body .ar-go,html body .dp-k{font-size:12px!important}
+html body .tag-brand{font-size:13px!important}
+html body .tag-name{font-size:13.5px!important}
+html body .tag-btn,html body .more-b{font-size:12.5px!important}
+html body .esc-brands button,html body .catstrip button,html body .chips button{font-size:12.5px!important}
+html body .esc-brands button em,html body .catstrip button em,html body .chips button em{font-size:11.5px!important}
+html body .ftr-c2 .ftr-legal,html body .ftr-c2 .ftr-legal a,html body .ftr-c2 .ftr-legal span{color:#A89C86!important;font-size:12.5px!important}
+html body .fi-c small{font-size:11.5px!important}
+html body .fi-bld{font-size:12px!important}
+html body .desk-link{font-size:12.5px!important}
+
+/* ---------- зоны нажатия ---------- */
+html body .ftr-c2 .f2-col a{display:flex;align-items:center;min-height:40px;margin:0!important}
+html body .f2-ph,html body .f2-ic{display:inline-flex;align-items:center;min-height:40px}
+html body .ftr-legal a{display:inline-flex;align-items:center;min-height:36px}
+html body .tag-pn{display:inline-block;padding:7px 0;min-height:36px}
+html body .tag-btn{min-height:44px}
+html body .more-b{min-height:44px}
+html body .esc-brands button,html body .catstrip button,html body .chips button{min-height:40px}
+html body .fi-bld{display:inline-flex;align-items:center;min-height:44px;padding:0 10px}
+html body .desk-link{display:inline-flex;align-items:center;min-height:40px}
+html body .crumbs a{display:inline-flex;align-items:center;min-height:32px}
+
+/* ---------- плавающая кнопка заявки: компактная, не перекрывает контент ---------- */
+@media (min-width:761px){
+ html body .cta-fix{width:auto!important;height:46px!important;min-width:0!important;padding:0 22px!important;border-radius:23px!important;right:18px!important;bottom:18px!important}
+ html body .cta-fix span{font-size:12px!important;letter-spacing:.14em!important;white-space:nowrap}
+}
+
+/* ---------- шапка: табло этажа и аварийный вызов слева, в свободном месте ---------- */
+.hdr2-in{position:relative}
+.gl-hleft{position:absolute;left:40px;top:50%;transform:translateY(-50%);display:none;align-items:center;gap:10px;z-index:3}
+.gl-floor{display:inline-flex;align-items:center;gap:9px;height:40px;padding:0 12px 0 10px;border:1px solid rgba(242,194,48,.55);background:#0D0C0B;color:#F2C230;text-decoration:none;cursor:pointer;font:inherit}
+.gl-floor b{font:800 20px/1 "Jost",var(--sans);letter-spacing:.06em;color:#FFD457;text-shadow:0 0 8px rgba(255,212,87,.35);font-variant-numeric:tabular-nums}
+.gl-floor span{font:600 11.5px/1.1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#EDE3D1;max-width:96px}
+.gl-floor:hover{border-color:#FFD457}
+.gl-sos{display:none;align-items:center;gap:8px;height:40px;padding:0 14px;background:#A3271F;color:#F6EBD5;text-decoration:none;font:700 12px var(--sans);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.gl-sos i{width:9px;height:9px;border-radius:50%;background:#FFD457;animation:sosb 1.8s ease-in-out infinite}
+.gl-sos:hover{background:#8b1f19}
+@keyframes sosb{0%,100%{opacity:1}50%{opacity:.25}}
+@media (min-width:1160px){.gl-hleft{display:flex}}
+@media (min-width:1400px){.gl-sos{display:inline-flex}}
+
+/* ---------- режим «без анимации» ---------- */
+.calm-t{display:block;width:100%;margin:10px 0 0;padding:10px 0;border:0;border-top:1px solid rgba(237,227,209,.18);background:none;color:#ABA092;font:500 13px var(--sans);text-align:left;cursor:pointer}
+.calm-t b{color:#F2C230;font-weight:600}
+html.calm *,html.calm *::before,html.calm *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+
+/* ---------- карточка детали: компактный верх, главное сразу видно ---------- */
+body.pg-shop .title-prod .psign{padding-top:18px!important;padding-bottom:22px!important}
+body.pg-shop .title-prod .mx-sub{margin-top:8px!important}
+@media (max-width:760px){
+ body.pg-shop .title-prod{margin-bottom:6px}
+ body.pg-shop .title-prod .ps-t{font-size:clamp(30px,10vw,44px)!important;line-height:1.05!important}
+ body.pg-shop .title-prod .mx-sub{font-size:15px!important;line-height:1.45!important}
+ body.pg-shop .title-prod .psign{margin-top:0!important}
+ body.pg-shop .card-k{margin:12px 0!important}
+}
+.mb-req{display:flex;align-items:center;justify-content:center;height:56px;background:#F2C230;color:#1a1300!important;font:700 12px var(--sans);letter-spacing:.12em;text-transform:uppercase;border:0;cursor:pointer}
+
+/* ---------- «Вы смотрели» ---------- */
+.recent{margin:34px auto 0;max-width:1100px;padding:0 20px}
+.recent h2{margin:0 0 12px;font:700 15px var(--fut,var(--sans))!important;letter-spacing:.14em!important;text-transform:uppercase;color:var(--hc,#E8B53A);opacity:.95}
+.recent ul{list-style:none;margin:0;padding:0;display:flex;gap:12px;overflow-x:auto;padding-bottom:6px}
+.recent a{display:flex;flex-direction:column;gap:6px;width:116px;text-decoration:none;color:inherit;font-size:12.5px;line-height:1.3}
+.recent img{width:116px;height:116px;object-fit:cover;background:#fff;border:1px solid rgba(232,181,58,.4)}
+.recent b{font-weight:700;letter-spacing:.03em;word-break:break-all}
+
+/* хлебные крошки на телефоне: компактнее, переносятся по центру */
+@media (max-width:760px){
+ html body .crumbs{display:flex;flex-wrap:wrap;justify-content:center;gap:0 2px;padding:0 6px}
+ html body .crumbs,html body .crumbs *{letter-spacing:.05em!important;font-size:12px!important}
+}
+/* карточка детали на компьютере: артикул крупный, но не на пол-экрана */
+@media (min-width:761px){
+ body.pg-shop .title-prod .ps-t{font-size:clamp(44px,6vw,88px)!important}
+}
+
+/* ---------- штампы статуса и цена ---------- */
+.stamp{display:inline-block;padding:3px 12px;border:2px solid currentColor;border-radius:3px;font:800 13px/1.2 var(--fut,var(--sans));letter-spacing:.14em;text-transform:uppercase;transform:rotate(-3deg);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
+.stamp-ok{color:#1E6B4A}
+.stamp-order{color:#9A5B00}
+.opis .stamp-ok{color:#1E6B4A}
+.stamp-s{font-size:11px;padding:1px 8px;margin-left:8px;border-width:1.5px;font-style:normal;vertical-align:middle;color:#7FD6A8}
+.price-big{font:900 22px/1.1 var(--fut,var(--sans));letter-spacing:.02em;color:#2A1823}
+.tag-price{font-size:16px!important}
+body.live-flt .card.live-off{display:none!important}
+body.live-flt .more-b{display:none!important}
+.cat-tools{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:center;margin:18px auto 6px;padding:12px 18px;max-width:900px;border:1px solid rgba(232,181,58,.5);color:#F6EBD5}
+.cat-tools .ct-chk{display:inline-flex;align-items:center;gap:10px;min-height:40px;cursor:pointer;font:600 14px var(--sans)}
+.cat-tools input[type=checkbox]{width:20px;height:20px;accent-color:#E8B53A}
+.cat-tools .ct-sel{display:inline-flex;align-items:center;gap:10px;font:600 14px var(--sans)}
+.cat-tools select{min-height:40px;padding:0 12px;border:1px solid rgba(246,235,213,.55);background:rgba(0,0,0,.25);color:#F6EBD5;font:500 14px var(--sans);border-radius:0}
+.cat-tools select option{color:#111}

@@ -808,7 +808,8 @@ document.querySelectorAll('.ch-t,.mc-t,.sec-t,.cta2 h2,.h2,.dp-h h2,.mx-t').forE
   if (came) { const c = curtain(); hole(c, 0); D.classList.remove('iris-in');
     const open = async () => { await run(c, 0, R(), 480); c.remove(); };
     let _op=0; const go1=()=>{ if(_op) return; _op=1; setTimeout(open, 40); }; if (document.readyState !== 'loading') go1(); else addEventListener('DOMContentLoaded', go1); setTimeout(go1, 700); }
-  const irisOut = async href => { try { sessionStorage.setItem('gl-iris', '1'); } catch (e) {} const c = curtain(); hole(c, R()); await run(c, R(), 0, 420); setTimeout(() => { location.href = href; }, 60); };
+  const calmOn = () => { try { return localStorage.getItem('gl-calm') === '1' || matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } };
+  const irisOut = async href => { if (calmOn()) { location.href = href; return; } try { sessionStorage.setItem('gl-iris', '1'); } catch (e) {} const c = curtain(); hole(c, R()); await run(c, R(), 0, 420); setTimeout(() => { location.href = href; }, 60); };
   window.__irisOut = href => irisOut(href);
   window.addEventListener('click', e => {
     if (e.target.closest && e.target.closest('[data-search]')) return;
@@ -883,7 +884,7 @@ document.querySelectorAll('.ch-t,.mc-t,.sec-t,.cta2 h2,.h2,.dp-h h2,.mx-t').forE
   }
   // одна кнопка заявки справа внизу (ПК), с надписью и мягкой пульсацией
   if (!isHome) { const src = document.querySelector('[data-cart-open]');
-    if (src) { const b = document.createElement('button'); b.type = 'button'; b.className = 'cta-fix'; b.innerHTML = '<span>Обсудить<br>объект</span>';
+    if (src) { const b = document.createElement('button'); b.type = 'button'; b.className = 'cta-fix'; b.innerHTML = '<span>Заявка</span>'; b.setAttribute('aria-label', 'Оставить заявку');
       b.addEventListener('click', () => src.click()); document.body.appendChild(b); D.classList.add('has-ctafix'); } }
   // поиск по сайту: лупа в шапке
   const openSearch = async () => {

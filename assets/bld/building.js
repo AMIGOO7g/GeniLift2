@@ -43,8 +43,9 @@
     const href = R + SLUG[n] + '/';
     if (window.__irisOut) window.__irisOut(href); else location.href = href;
   }
+  const CALM = (() => { try { return localStorage.getItem('gl-calm') === '1' || matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
   async function go(n) {
-    if (busy) return; busy = true; const fast = !!sessionStorage.getItem('gl-rides'); try { sessionStorage.setItem('gl-rides', '1'); } catch (e) {}
+    if (busy) return; busy = true; if (CALM) { await enterRoom(n); return; } const fast = !!sessionStorage.getItem('gl-rides'); try { sessionStorage.setItem('gl-rides', '1'); } catch (e) {}
     if (n !== floor) { car.classList.add('closed'); await wait(fast ? 350 : 650); light(floor, false); needleTo(n); await wait(fast ? 80 : 200); await move(n);
       car.animate([{transform:'translateY(0)'},{transform:'translateY(2px)'},{transform:'translateY(0)'}], {duration: 380}); floor = n; await wait(250);
       car.classList.remove('closed'); await wait(fast ? 250 : 450); light(n, true); await wait(fast ? 500 : 1100); }
@@ -59,7 +60,7 @@
     if (innerWidth <= 760) { const r = car.getBoundingClientRect(); scrollTo(0, Math.max(0, scrollY + r.top + r.height / 2 - innerHeight / 2)); }
     let seen = false; try { seen = !!sessionStorage.getItem('gl-intro'); sessionStorage.setItem('gl-intro', '1'); } catch (e) {}
     const it = document.getElementById('bIntro'), hn = document.querySelector('.bhint');
-    if (seen) { it && it.remove(); document.documentElement.classList.add('b-ready'); hn && hn.classList.add('on'); const h1 = B.querySelector('.b-h1'); h1 && h1.classList.add('on'); return; }
+    if (seen || CALM) { it && it.remove(); document.documentElement.classList.add('b-ready'); hn && hn.classList.add('on'); const h1 = B.querySelector('.b-h1'); h1 && h1.classList.add('on'); return; }
     document.documentElement.classList.add('b-intro', 'b-nologo');
     const fl = document.getElementById('bFly'), wm = document.querySelector('.hdr-logo');
     await wait(150); it.classList.add('s1'); await wait(2100); it.classList.add('s2'); fl.style.opacity = '1'; await wait(700);
