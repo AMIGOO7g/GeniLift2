@@ -345,7 +345,7 @@ window.glSend = function(form, st, items){
      табло меняет этаж, на новой странице открываются двери нужной кабины. Внутри раздела — мягко, без лифта ---------- */
   const nl = document.getElementById('navlift');
   const FL = { '': 1, 'o-kompanii': 2, 'obekty': 2, 'zapchasti': 3, 'korzina': 3, 'dostavka': 3, 'servis': 4, 'ustroystvo': 4, 'kontakty': 5 };
-  const NAMES = { 1: ['Этаж первый', 'Холл'], 2: ['Этаж второй', 'О компании'], 3: ['Этаж третий', 'Скобяная лавка'], 4: ['Этаж четвёртый', 'Монтаж и сервис'], 5: ['Этаж пятый', 'Контакты'] };
+  const NAMES = { 1: ['Этаж первый', 'Холл'], 2: ['Этаж второй', 'О компании'], 3: ['Этаж третий', 'Запчасти'], 4: ['Этаж четвёртый', 'Монтаж и сервис'], 5: ['Этаж пятый', 'Контакты'] };
   const base = new URL((document.querySelector('.hdr-logo') || {}).href || './', location.href).pathname;
   const sect = u => { const p = new URL(u, location.href).pathname; return p.startsWith(base) ? p.slice(base.length).split('/')[0] : p; };
   const floorOf = u => { const m = String(u).match(/#floor-(\d)/); if (m) return +m[1]; return FL[sect(u)] || 1; };
@@ -509,7 +509,7 @@ window.glSend = function(form, st, items){
       ? cart.map((i, k) => `<div class="line"><div><b>${esc(i.b)} ${esc(i.a)}</b><span>${esc(i.n)}</span></div>
           <div class="qty"><button type="button" data-q="${k}" data-d="-1" aria-label="Меньше">−</button><output>${i.q}</output><button type="button" data-q="${k}" data-d="1" aria-label="Больше">+</button></div>
           <button class="rm" type="button" data-rm="${k}" aria-label="Убрать">×</button></div>`).join('')
-      : `<div class="drawer-empty">${(document.getElementById('emEmpty') || {}).innerHTML || ''}<p>Заявка пуста. Добавьте детали из лавки или опишите задачу и пришлите фото — подберём сами.</p></div>`;
+      : `<div class="drawer-empty">${(document.getElementById('emEmpty') || {}).innerHTML || ''}<p>Заявка пуста. Добавьте детали из каталога или опишите задачу и пришлите фото — подберём сами.</p></div>`;
     document.querySelectorAll('.cart-ico').forEach(ic => ic.classList.toggle('has', total > 0));
     document.querySelectorAll('[data-add]').forEach(b => {
       const d = JSON.parse(b.dataset.add), inCart = cart.some(i => i.s === d.s && i.a === d.a);
@@ -606,7 +606,7 @@ window.glSend = function(form, st, items){
       e.preventDefault();
       const st = f.querySelector('.cp-status');
       if (!f.phone.value.trim()) { st.textContent = 'Укажите телефон — по нему перезвоним.'; f.phone.focus(); return; }
-      if (!cart.length && !f.photo.files[0] && !f.msg.value.trim()) { st.textContent = 'Добавьте деталь из лавки, фото или опишите задачу.'; return; }
+      if (!cart.length && !f.photo.files[0] && !f.msg.value.trim()) { st.textContent = 'Добавьте деталь из каталога, фото или опишите задачу.'; return; }
       if (!f.agree.checked) { st.textContent = 'Отметьте согласие на обработку данных.'; return; }
       const num = 'GL-' + String(Date.now()).slice(-5);
       const done = document.getElementById('cpDone');
@@ -781,7 +781,7 @@ document.querySelectorAll('.ch-t,.mc-t,.sec-t,.cta2 h2,.h2,.dp-h h2,.mx-t').forE
   ov.querySelector('.srch-x').addEventListener('click', close);
   addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   ov.querySelector('form').addEventListener('submit', e => { e.preventDefault(); const q = ov.querySelector('input').value.trim(); if (!q) return; const l = q.toLowerCase();
-    const SRV = [['монтаж','servis/montazh/'],['обслуж','servis/obsluzhivanie/'],['ремонт','servis/obsluzhivanie/'],['пусконалад','servis/puskonaladka/'],['наладк','servis/puskonaladka/'],['подбор лифт','servis/podbor/'],['доставк','dostavka/'],['оплат','dostavka/'],['контакт','kontakty/']];
+    const SRV = [['монтаж','servis/montazh/'],['обслуж','servis/obsluzhivanie/'],['ремонт','servis/obsluzhivanie/'],['пусконалад','servis/pusk/'],['наладк','servis/pusk/'],['подбор лифт','servis/podbor/'],['доставк','dostavka/'],['оплат','dostavka/'],['контакт','kontakty/']];
     const hit = SRV.find(x => l.includes(x[0])); if (hit) { location.href = base + hit[1]; return; }
     const ESC = ['эскалат','поруч','ступен','гребён','гребен','фриз','травол'];
     location.href = base + (ESC.some(w => l.includes(w)) ? 'zapchasti/eskalatory/' : 'zapchasti/') + '?q=' + encodeURIComponent(q); });
@@ -955,7 +955,7 @@ document.querySelectorAll('.esc-s').forEach(s=>{const g=s.querySelector('.esc-gr
 /* Поиск: подсказки при вводе */
 (function(){ const ov=document.querySelector('.srch-ov'); if(!ov) return; const inp=ov.querySelector('input'), form=ov.querySelector('form'); const logo=document.querySelector('.hdr-logo'); const base=logo?logo.getAttribute('href'):'./';
  const box=document.createElement('div'); box.className='srch-sug'; form.after(box); let data=null;
- const SRV=[['Монтаж лифтов','servis/montazh/'],['Обслуживание лифтов и эскалаторов','servis/obsluzhivanie/'],['Пусконаладка','servis/puskonaladka/'],['Подбор лифта','servis/podbor/'],['Доставка и оплата','dostavka/'],['Контакты','kontakty/']];
+ const SRV=[['Подбор запчасти по фото','podbor-po-foto/'],['Монтаж лифтов','servis/montazh/'],['Обслуживание лифтов и эскалаторов','servis/obsluzhivanie/'],['Пусконаладка','servis/pusk/'],['Подбор лифта','servis/podbor/'],['Доставка и оплата','dostavka/'],['Контакты','kontakty/']];
  const BR=['Hitachi','KONE','OTIS','LG Sigma','Mitsubishi','ThyssenKrupp','Hyundai','Schindler','Gustav Wolf','Draka','Fujitec','Toshiba','SJEC','Canny','Yungtay'];
  const load=()=>data?Promise.resolve(data):fetch(base+'assets/search.json').then(r=>r.json()).then(d=>data=d).catch(()=>data={p:[],s:[]});
  const esc=t=>t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
