@@ -13,13 +13,15 @@
   try { floor = +(sessionStorage.getItem('gl-floor') || 1); } catch (e) {}
   if (!(floor >= 1 && floor <= NF)) floor = 1;
   const hh = () => (hdr ? hdr.getBoundingClientRect().height : 72);
-  const barH = () => { const b = document.querySelector('.mbar'); return b && getComputedStyle(b).display !== 'none' ? b.getBoundingClientRect().height : 0; };
+  const barH = () => { let h = 0; ['.mbar', '.hbar'].forEach(q => { const b = document.querySelector(q); if (b && getComputedStyle(b).display !== 'none') h = Math.max(h, b.getBoundingClientRect().height); }); return h; };
   function fit() {
     const mob = innerWidth <= 760, top = hh() + (mob ? 18 : 34), bot = barH() + (mob ? 64 : 40), aw = innerWidth - 16, ah = innerHeight - top - bot;
-    if (mob) {                                       // телефон: здание по ширине экрана, страница прокручивается
-      const fx0 = W0 * .235, fx1 = W0 * .775, s = (innerWidth - 56) / (fx1 - fx0), t = hh() + 14;   // крупно: шахта + этажи
-      Object.assign(B.style, { width: W0 * s + 'px', height: H0 * s + 'px', left: (innerWidth / 2 - (fx0 + fx1) / 2 * s) + 'px', top: (t - BOX.y0 * s) + 'px' });
-      Object.assign(stage.style, { position: 'absolute', top: '0px', left: '0px', right: '0px', height: (t + (BOX.y1 - BOX.y0) * s + 90) + 'px' }); B.style.transform = 'none'; return;
+    if (mob) {                                       // телефон: здание целиком на одном экране, по центру, без прокрутки
+      const fx0 = W0 * .235, fx1 = W0 * .775, t = hh() + 8, bt = barH(), CB = 1140;   // CB — низ рисунка (яма шахты)
+      const avail = innerHeight - t - bt - 10, s = Math.min((innerWidth - 40) / (fx1 - fx0), avail / (CB - BOX.y0));
+      const top = t + Math.max(0, (avail - (CB - BOX.y0) * s) / 2) - BOX.y0 * s;
+      Object.assign(B.style, { width: W0 * s + 'px', height: H0 * s + 'px', left: (innerWidth / 2 - (fx0 + fx1) / 2 * s) + 'px', top: top + 'px' });
+      Object.assign(stage.style, { position: 'absolute', top: '0px', left: '0px', right: '0px', height: innerHeight + 'px' }); B.style.transform = 'none'; return;
     }
     const s = Math.min(aw / (BOX.x1 - BOX.x0), ah / (BOX.y1 - BOX.y0));
     Object.assign(B.style, { width: W0 * s + 'px', height: H0 * s + 'px', left: (innerWidth / 2 - (BOX.x0 + BOX.x1) / 2 * s) + 'px', top: (top + (ah - (BOX.y1 - BOX.y0) * s) / 2 - BOX.y0 * s) + 'px' });

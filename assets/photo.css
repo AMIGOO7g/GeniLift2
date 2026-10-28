@@ -78,14 +78,20 @@ html body main .ph .ph-side .btn-fill[type=submit]{align-self:center;margin:8px 
 @media (min-width:1200px){body.home-bld .hp{display:block}}
 .hbar{display:none}
 @media (max-width:1199px){
- body.home-bld .hbar{display:grid;grid-template-columns:1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:7;padding-bottom:env(safe-area-inset-bottom,0px);background:rgba(13,12,11,.96);border-top:1px solid rgba(242,194,48,.45)}
- .hbar a{display:flex;align-items:center;justify-content:center;gap:10px;height:56px;color:#F2C230;font:500 12px var(--sans);text-transform:uppercase;letter-spacing:.12em;text-decoration:none}
- .hbar a+a{border-left:1px solid #2A2621;color:#EDE3D1}
- .hbar svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
- body.home-bld{padding-bottom:56px}
+ body.home-bld .hbar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:7;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(13,12,11,.97);border-top:1px solid rgba(242,194,48,.45)}
+ .hbar form{display:flex;margin:0 0 8px;border:2px solid #F2C230;background:#1B1815}
+ .hbar input{flex:1;min-width:0;height:44px;padding:0 12px;border:0;background:transparent;color:#EDE3D1;font:400 16px var(--sans)}
+ .hbar input::placeholder{color:#ABA092}
+ .hbar input:focus{outline:none}
+ .hbar form:focus-within{box-shadow:0 0 0 2px rgba(242,194,48,.45)}
+ .hbar button{width:52px;border:0;background:#F2C230;color:#1a1300;font-size:22px;cursor:pointer}
+ .hb-acts{display:grid;grid-template-columns:1.5fr 1fr;gap:8px}
+ .hb-acts a{display:flex;align-items:center;justify-content:center;gap:8px;height:46px;text-decoration:none;font:700 12px var(--sans);letter-spacing:.08em;text-transform:uppercase}
+ .hb-photo{background:#A3271F;color:#F6EBD5;border:1px solid #A3271F}
+ .hb-call{color:#F2C230;border:1px solid #F2C230}
+ .hb-acts svg{width:20px;height:20px;flex:0 0 20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+ body.home-bld .m-sig{display:none!important}
 }
-html.b-intro .hp,#bStage.left~.hp{opacity:0;pointer-events:none}
-.hp{transition:opacity .6s}
 
 /* Живые данные каталога: цена и наличие из админки */
 .tag-price{display:block;margin:6px 0 2px;font:700 14px/1.3 var(--fut,var(--sans));letter-spacing:.04em;color:inherit}
@@ -97,3 +103,9 @@ html.b-intro .hp,#bStage.left~.hp{opacity:0;pointer-events:none}
 /* «Контакты» теперь включают бывший «Холл»: плитки под титулом */
 .hall-desk{margin:34px auto 34px}
 .desk-links{display:flex;flex-direction:column;align-items:center;gap:12px}
+
+/* планшеты: панель по центру, подписи у здания не обрезаются */
+@media (min-width:761px) and (max-width:1199px){
+ body.home-bld .hbar{left:50%;right:auto;width:min(640px,100%);transform:translateX(-50%);border-left:1px solid rgba(242,194,48,.45);border-right:1px solid rgba(242,194,48,.45)}
+}
+@media (max-width:900px){#bld a.note{display:none!important}}
