@@ -82,6 +82,7 @@ html body main .ph .ph-side .btn-fill[type=submit]{align-self:center;margin:8px 
  .hbar a{display:flex;align-items:center;justify-content:center;gap:10px;height:56px;color:#F2C230;font:500 12px var(--sans);text-transform:uppercase;letter-spacing:.12em;text-decoration:none}
  .hbar a+a{border-left:1px solid #2A2621;color:#EDE3D1}
  .hbar svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+ body.home-bld{padding-bottom:56px}
 }
 html.b-intro .hp,#bStage.left~.hp{opacity:0;pointer-events:none}
 .hp{transition:opacity .6s}
@@ -92,3 +93,7 @@ html.b-intro .hp,#bStage.left~.hp{opacity:0;pointer-events:none}
 .live-note{margin:0 0 18px;padding:12px 16px;border:1px solid #A3271F;background:rgba(163,39,31,.12);font-size:14px;color:inherit}
 .pextra-t{max-width:900px;margin:0 auto;padding:6px 24px 34px;line-height:1.65;font-size:16px}
 .pextra-t p{margin:0 0 12px}
+
+/* «Контакты» теперь включают бывший «Холл»: плитки под титулом */
+.hall-desk{margin:34px auto 34px}
+.desk-links{display:flex;flex-direction:column;align-items:center;gap:12px}

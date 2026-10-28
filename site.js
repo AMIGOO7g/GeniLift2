@@ -344,8 +344,8 @@ window.glSend = function(form, st, items){
   /* ---------- Переход между разделами — поездка: двери закрываются на этом этаже, свет по шву,
      табло меняет этаж, на новой странице открываются двери нужной кабины. Внутри раздела — мягко, без лифта ---------- */
   const nl = document.getElementById('navlift');
-  const FL = { '': 1, 'o-kompanii': 2, 'obekty': 2, 'zapchasti': 3, 'korzina': 3, 'dostavka': 3, 'servis': 4, 'ustroystvo': 4, 'kontakty': 5 };
-  const NAMES = { 1: ['Этаж первый', 'Холл'], 2: ['Этаж второй', 'О компании'], 3: ['Этаж третий', 'Запчасти'], 4: ['Этаж четвёртый', 'Монтаж и сервис'], 5: ['Этаж пятый', 'Контакты'] };
+  const FL = { '': 1, 'o-kompanii': 1, 'obekty': 1, 'zapchasti': 2, 'korzina': 2, 'dostavka': 2, 'podbor-po-foto': 2, 'servis': 3, 'ustroystvo': 3, 'kontakty': 4, 'holl': 4 };
+  const NAMES = { 1: ['Этаж первый', 'О компании'], 2: ['Этаж второй', 'Запчасти'], 3: ['Этаж третий', 'Монтаж и сервис'], 4: ['Этаж четвёртый', 'Контакты'] };
   const base = new URL((document.querySelector('.hdr-logo') || {}).href || './', location.href).pathname;
   const sect = u => { const p = new URL(u, location.href).pathname; return p.startsWith(base) ? p.slice(base.length).split('/')[0] : p; };
   const floorOf = u => { const m = String(u).match(/#floor-(\d)/); if (m) return +m[1]; return FL[sect(u)] || 1; };
@@ -789,7 +789,7 @@ document.querySelectorAll('.ch-t,.mc-t,.sec-t,.cta2 h2,.h2,.dp-h h2,.mx-t').forE
 
 /* ---------- Переходы между этажами — через здание на главной ---------- */
 (() => {
-  const SLUGS = { 'holl': 1, 'o-kompanii': 2, 'zapchasti': 3, 'servis': 4, 'kontakty': 5 };
+  const SLUGS = { 'o-kompanii': 1, 'zapchasti': 2, 'servis': 3, 'kontakty': 4, 'holl': 4 };
   const logo = document.querySelector('.hdr-logo'); if (!logo) return;
   const root = new URL(logo.getAttribute('href') || './', location.href);
   const floorOfUrl = u => { if (u.origin !== root.origin || !u.pathname.startsWith(root.pathname)) return -1;
@@ -947,7 +947,7 @@ document.querySelectorAll('.esc-s').forEach(s=>{const g=s.querySelector('.esc-gr
  const st=document.getElementById('bStage'), B=document.getElementById('bld'); if(!st||!B) return;
  const h1=document.querySelector('h1.b-h1'); const sig=document.createElement('p'); sig.className='m-sig'; sig.textContent=h1?h1.textContent.replace(/\s+/g,' ').trim():'GeniLift — запчасти, монтаж и обслуживание лифтов и эскалаторов · Москва и область'; document.body.appendChild(sig);
  const place=()=>{ sig.style.top=(st.offsetTop+st.offsetHeight+10)+'px'; }; place(); addEventListener('resize',place); setTimeout(place,1500); setTimeout(place,5000);
- if(sessionStorage.getItem('gl-tapped')) return; const fc=B.querySelector('.fc[data-f="3"]'); if(!fc) return;
+ if(sessionStorage.getItem('gl-tapped')) return; const fc=B.querySelector('.fc[data-f="2"]'); if(!fc) return;
  const t=document.createElement('span'); t.className='tap-hint'; t.innerHTML='<i></i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10h.5V8.5a1.5 1.5 0 0 1 3 0V10h.5V9.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-.7a6 6 0 0 1-4.6-2.2L4.4 15.6a1.4 1.4 0 0 1 2-2L9 15.5z"/></svg>';
  setTimeout(()=>{ t.style.left=(fc.offsetLeft+fc.offsetWidth*.62)+'px'; t.style.top=(fc.offsetTop+fc.offsetHeight*.55)+'px'; B.appendChild(t); requestAnimationFrame(()=>t.classList.add('on')); },4200);
  B.addEventListener('click',()=>{ try{sessionStorage.setItem('gl-tapped','1')}catch(e){} t.remove(); },{once:true}); })();

@@ -3427,12 +3427,12 @@ body.home-bld .ftr,body.home-bld .mbar-sp{display:none!important}
 #bStage{position:fixed;inset:0;z-index:5;transition:transform 1.1s cubic-bezier(.65,0,.35,1),opacity .8s}
 html.b-intro #bStage{opacity:0}
 #bStage.left{transform:translateX(-100%)}#bStage.now,#roomv.now{transition:none!important}
-#bld{position:absolute;aspect-ratio:1086/1448;container-type:inline-size}
+#bld{position:absolute;aspect-ratio:1086/1219;container-type:inline-size}
 #bld img.base,#bld .fc,#bld .shc{position:absolute;inset:0;width:100%;height:100%}
 #bld img.base{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(180deg,#000 0,#000 94%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(180deg,#000 0,#000 94%,transparent 100%);mask-composite:intersect}
-#bld .fc,#bld .shc{background:url(assets/bld/color.webp) center/100% 100%}
-#bld .stand{position:absolute;inset:0;z-index:3;background:url(assets/bld/color0.webp) center/100% 100%;clip-path:polygon(38.5% 8.56%,40.15% 8.56%,41.44% 11.95%,37.11% 11.95%)}
-#bld .shc{clip-path:polygon(25.6% 2%,49% 2%,49% 13.4%,40.4% 13.4%,40.4% 98%,25.6% 98%)}
+#bld .fc,#bld .shc{background:url(assets/bld/color-4.webp) center/100% 100%}
+#bld .stand{position:absolute;inset:0;z-index:3;background:url(assets/bld/color0-4.webp) center/100% 100%;clip-path:polygon(38.5% 10.17%,40.15% 10.17%,41.44% 14.19%,37.11% 14.19%)}
+#bld .shc{clip-path:polygon(25.6% 2.38%,49% 2.38%,49% 15.92%,40.4% 15.92%,40.4% 97.62%,25.6% 97.62%)}
 #bld .fc{clip-path:inset(var(--t) calc(100% - var(--l)) var(--b) var(--l));transition:clip-path 1.2s cubic-bezier(.6,0,.3,1)}
 #bld .fc.on{clip-path:inset(var(--t) var(--r) var(--b) var(--l))}
 #bld .wheel{position:absolute;z-index:2;will-change:transform}
@@ -3442,7 +3442,8 @@ html.b-intro #bStage{opacity:0}
 #bld .needle i::after{content:"";position:absolute;left:50%;bottom:-9px;width:6px;height:9px;transform:translateX(-50%);background:#1E1A14;border-radius:0 0 3px 3px}
 #bld .pq{position:absolute;border:0;padding:0;margin:0;background:transparent;color:#2A241C;container-type:size;cursor:pointer;font:inherit;text-align:center;transition:color 1s;z-index:5;box-shadow:none}
 #bld .pq.on{color:var(--hc)}
-#bld .pq[data-f="1"]:not(.on),#bld .pq[data-f="3"]:not(.on){color:#EDE4D3}
+#bld .pq[data-f="1"].on{color:#F6EBD5}#bld .pq[data-f="2"].on{color:#A3271F}   /* цвет надписи — по панели на картинке, а не по странице */
+#bld .pq[data-f="1"]:not(.on){color:#EDE4D3}
 #bld .pq .pn{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);font:900 92cqh/1 var(--fut,Jost);opacity:.16;pointer-events:none}
 #bld .pq .pk{position:absolute;left:0;right:0;top:22%;font:700 7cqh var(--fut,Jost);letter-spacing:.42em;padding-left:.42em;text-transform:uppercase;opacity:.85}
 #bld .pq .pt{position:absolute;left:3%;right:3%;top:54%;transform:translateY(-50%);font:900 min(20cqh,9.8cqw)/1 var(--fut,Jost);letter-spacing:.08em;padding-left:.08em;text-transform:uppercase;white-space:nowrap}
@@ -3452,7 +3453,7 @@ html.b-intro #bStage{opacity:0}
 #bld .gt{position:absolute;left:26.02%;top:22.97%;width:48.31%;height:66.62%;transform-origin:left center;transform:scaleX(.1);transition:transform .9s cubic-bezier(.6,.05,.3,1)}
 #bld .gt img{width:100%;height:100%;display:block}#bld .car.closed .gt{transform:scaleX(1)}
 #bld .cw{position:absolute;left:28.2%;width:4.6%;aspect-ratio:162/524;z-index:2;filter:brightness(.62) saturate(.8)}
-#bld .mesh{position:absolute;left:27.7%;width:10.6%;top:13%;height:79%;z-index:4;pointer-events:none;opacity:.5;background:repeating-linear-gradient(60deg,transparent 0 5px,rgba(10,9,8,.85) 5px 6px),repeating-linear-gradient(-60deg,transparent 0 5px,rgba(10,9,8,.85) 5px 6px)}
+#bld .mesh{position:absolute;left:27.7%;width:10.6%;top:15.44%;height:75.04%;z-index:4;pointer-events:none;opacity:.5;background:repeating-linear-gradient(60deg,transparent 0 5px,rgba(10,9,8,.85) 5px 6px),repeating-linear-gradient(-60deg,transparent 0 5px,rgba(10,9,8,.85) 5px 6px)}
 #bld .ov{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:5}
 #bld .note{position:absolute;width:24cqw;transform:translateY(-50%);cursor:pointer}
 #bld .note.L{right:81.6%;text-align:right}#bld .note.R{left:82%}
@@ -3605,12 +3606,12 @@ html:not(.b-ready) body.home-bld .hdr{opacity:1}html.js:not(.b-ready) body.home-
 @font-face{font-family:'Bad Script';font-weight:400;font-style:normal;font-display:swap;src:url(assets/fonts/badscript-cyrillic-latin-400.woff2) format('woff2')}
 :root{--hand:"Bad Script","Segoe Script",cursive}
 #bld .note i{font:400 max(14px,1.5cqw)/1.35 var(--hand)!important;color:#4A3A28!important}
-#bld .bhint{position:absolute;left:3%;top:5.5%;width:22cqw;margin:0;z-index:6;font:400 max(15px,1.75cqw)/1.25 var(--hand);color:#4A3A28;transform:rotate(-3deg);clip-path:inset(0 100% 0 0);transition:clip-path 1.4s cubic-bezier(.6,0,.3,1);pointer-events:none}
+#bld .bhint{position:absolute;left:3%;top:6.53%;width:22cqw;margin:0;z-index:6;font:400 max(15px,1.75cqw)/1.25 var(--hand);color:#4A3A28;transform:rotate(-3deg);clip-path:inset(0 100% 0 0);transition:clip-path 1.4s cubic-bezier(.6,0,.3,1);pointer-events:none}
 #bld .bhint.on{clip-path:inset(-20% -40% -60% -5%)}
 #bld .bhint svg{position:absolute;left:60%;top:100%;width:9cqw;height:7cqw;overflow:visible}
-#bld .bcap{position:absolute;left:24%;right:22%;top:97%;margin:0;z-index:6;text-align:center;font:400 max(12px,1.45cqw)/1.35 var(--hand);color:#4A3A28}
+#bld .bcap{position:absolute;left:24%;right:22%;top:96.4%;margin:0;z-index:6;text-align:center;font:400 max(12px,1.45cqw)/1.35 var(--hand);color:#4A3A28}
 #bld .bcap i{display:block;width:60%;height:8px;margin:0 auto 4px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 8'><path d='M2 5 C 60 1, 120 8, 180 4 S 245 5, 258 3' fill='none' stroke='%234A3A28' stroke-width='1.3' stroke-linecap='round'/></svg>") center/100% 100% no-repeat}
-@media (max-width:900px){#bld .bhint{left:2%;top:3.6%;width:40cqw;font-size:15px}#bld .bhint svg{display:none}#bld .bcap{left:10%;right:10%;font-size:12px}}
+@media (max-width:900px){#bld .bhint{left:2%;top:4.28%;width:40cqw;font-size:15px}#bld .bhint svg{display:none}#bld .bcap{left:10%;right:10%;font-size:12px}}
 /* вводный абзац под комнатой */
 .room-intro{max-width:760px;margin:44px auto 0;padding:0 20px;text-align:center;font:500 italic 20px/1.5 var(--it);color:#4A3A28}
 .room-intro::after{content:"";display:block;width:120px;height:8px;margin:18px auto 0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8'><path d='M2 5 C 30 1, 60 8, 90 4 S 115 4, 118 3' fill='none' stroke='%234A3A28' stroke-width='1.3' stroke-linecap='round'/></svg>") center/100% 100% no-repeat}
@@ -3694,7 +3695,7 @@ body.st2.pg-shop .dn{border-color:rgba(142,111,46,.6)!important;background:#FBF6
 body.st2.pg-shop .dn .em{color:#5E1C24!important;--cut:#FBF6EC}
 body.st2.pg-shop .title-shop .search{box-shadow:0 0 0 1px #8E6F2E}
 /* без скриптов здание тоже на месте (скрипт потом уточняет размер) */
-#bld{left:50%;top:calc(var(--hdr,72px) + 10px);height:calc((100svh - var(--hdr,72px) - var(--barh,0px) - 20px) * 1.0284);transform:translateX(-50%)}
+#bld{left:50%;top:calc(var(--hdr,72px) + 10px);height:calc((100svh - var(--hdr,72px) - var(--barh,0px) - 20px) * 1.0339);transform:translateX(-50%)}
 .b-hint{left:auto;right:3%;top:3%;transform:rotate(-2deg)}
 @media (max-width:900px){.b-hint{right:auto;left:3%;top:1.5%}}
 
