@@ -2,30 +2,33 @@
 (() => {
   const B = document.getElementById('bld'); if (!B) return;
   const R = B.dataset.r || '';
-  const H0 = 1448, FLOORBOT = {1:1344,2:1109,3:878,4:649,5:420}, BOX = {x0:215,x1:870,y0:0,y1:1408};
-  const SLUG = {1:'holl',2:'o-kompanii',3:'zapchasti',4:'servis',5:'kontakty'};
-  const ANG = {1:-84,2:-47,3:0,4:47,5:84};
+  const W0 = 1086, H0 = 1219, NF = 4, FLOORBOT = {1:1115,2:880,3:649,4:420}, BOX = {x0:215,x1:870,y0:0,y1:1179};
+  const SLUG = {1:'o-kompanii',2:'zapchasti',3:'servis',4:'kontakty'};
+  const ANG = {1:-84,2:-28,3:28,4:84};
   const car = document.getElementById('bCar'), cw = document.getElementById('bCw'), wheel = document.getElementById('bWheel'), ndl = document.getElementById('bNdl');
   const stage = document.getElementById('bStage'), roomv = document.getElementById('roomv'), rc = document.getElementById('rc'), hero = document.getElementById('rhero');
   const hdr = document.querySelector('.hdr');
   const wait = ms => new Promise(r => setTimeout(r, ms));
   let floor = 1, pos = 0, busy = false;
   try { floor = +(sessionStorage.getItem('gl-floor') || 1); } catch (e) {}
+  if (!(floor >= 1 && floor <= NF)) floor = 1;
   const hh = () => (hdr ? hdr.getBoundingClientRect().height : 72);
-  const barH = () => { const b = document.querySelector('.mbar'); return b && getComputedStyle(b).display !== 'none' ? b.getBoundingClientRect().height : 0; };
+  const barH = () => { let h = 0; ['.mbar', '.hbar'].forEach(q => { const b = document.querySelector(q); if (b && getComputedStyle(b).display !== 'none') h = Math.max(h, b.getBoundingClientRect().height); }); return h; };
   function fit() {
     const mob = innerWidth <= 760, top = hh() + (mob ? 18 : 34), bot = barH() + (mob ? 64 : 40), aw = innerWidth - 16, ah = innerHeight - top - bot;
-    if (mob) {                                       // телефон: здание по ширине экрана, страница прокручивается
-      const fx0 = 1086 * .235, fx1 = 1086 * .775, s = (innerWidth - 56) / (fx1 - fx0), t = hh() + 14;   // крупно: шахта + этажи
-      Object.assign(B.style, { width: 1086 * s + 'px', height: 1448 * s + 'px', left: (innerWidth / 2 - (fx0 + fx1) / 2 * s) + 'px', top: (t - BOX.y0 * s) + 'px' });
-      Object.assign(stage.style, { position: 'absolute', top: '0px', left: '0px', right: '0px', height: (t + (BOX.y1 - BOX.y0) * s + 90) + 'px' }); B.style.transform = 'none'; return;
+    if (mob) {                                       // телефон: здание целиком на одном экране, по центру, без прокрутки
+      const fx0 = W0 * .235, fx1 = W0 * .775, t = hh() + 8, bt = barH(), CB = 1140;   // CB — низ рисунка (яма шахты)
+      const avail = innerHeight - t - bt - 10, s = Math.min((innerWidth - 40) / (fx1 - fx0), avail / (CB - BOX.y0));
+      const top = t + Math.max(0, (avail - (CB - BOX.y0) * s) / 2) - BOX.y0 * s;
+      Object.assign(B.style, { width: W0 * s + 'px', height: H0 * s + 'px', left: (innerWidth / 2 - (fx0 + fx1) / 2 * s) + 'px', top: top + 'px' });
+      Object.assign(stage.style, { position: 'absolute', top: '0px', left: '0px', right: '0px', height: innerHeight + 'px' }); B.style.transform = 'none'; return;
     }
     const s = Math.min(aw / (BOX.x1 - BOX.x0), ah / (BOX.y1 - BOX.y0));
-    Object.assign(B.style, { width: 1086 * s + 'px', height: 1448 * s + 'px', left: (innerWidth / 2 - (BOX.x0 + BOX.x1) / 2 * s) + 'px', top: (top + (ah - (BOX.y1 - BOX.y0) * s) / 2 - BOX.y0 * s) + 'px' });
+    Object.assign(B.style, { width: W0 * s + 'px', height: H0 * s + 'px', left: (innerWidth / 2 - (BOX.x0 + BOX.x1) / 2 * s) + 'px', top: (top + (ah - (BOX.y1 - BOX.y0) * s) / 2 - BOX.y0 * s) + 'px' });
     stage.style.top = '0px'; B.style.transform = 'none';
   }
   const carTop = n => { const h = car.getBoundingClientRect().height / B.getBoundingClientRect().height * H0; return (FLOORBOT[n] - h - 3) / H0 * 100; };
-  function setPos(p) { pos = p; car.style.top = p + '%'; const k = (carTop(1) - p) / (carTop(1) - carTop(5)); cw.style.top = (15 + k * 62) + '%'; wheel.style.transform = `rotate(${(p * 22).toFixed(2)}deg)`; }
+  function setPos(p) { pos = p; car.style.top = p + '%'; const k = (carTop(1) - p) / (carTop(1) - carTop(NF)); cw.style.top = (17.8 + k * 55.4) + '%'; wheel.style.transform = `rotate(${(p * 22).toFixed(2)}deg)`; }
   const needleTo = (n, inst) => { if (inst) ndl.style.transition = 'none'; ndl.style.transform = `rotate(${ANG[n]}deg)`; if (inst) { void ndl.offsetWidth; ndl.style.transition = ''; } };
   const light = (n, on) => B.querySelectorAll(`[data-f="${n}"]`).forEach(e => e.classList.toggle('on', on));
   function move(n) { return new Promise(res => { const from = pos, to = carTop(n), D = (sessionStorage.getItem('gl-rides') ? Math.min(1300, 500 + Math.abs(n - floor) * 220) : Math.min(2400, 800 + Math.abs(n - floor) * 420)), t0 = performance.now();
@@ -40,8 +43,9 @@
     const href = R + SLUG[n] + '/';
     if (window.__irisOut) window.__irisOut(href); else location.href = href;
   }
+  const CALM = (() => { try { return localStorage.getItem('gl-calm') === '1' || matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
   async function go(n) {
-    if (busy) return; busy = true; const fast = !!sessionStorage.getItem('gl-rides'); try { sessionStorage.setItem('gl-rides', '1'); } catch (e) {}
+    if (busy) return; busy = true; if (CALM) { await enterRoom(n); return; } const fast = !!sessionStorage.getItem('gl-rides'); try { sessionStorage.setItem('gl-rides', '1'); } catch (e) {}
     if (n !== floor) { car.classList.add('closed'); await wait(fast ? 350 : 650); light(floor, false); needleTo(n); await wait(fast ? 80 : 200); await move(n);
       car.animate([{transform:'translateY(0)'},{transform:'translateY(2px)'},{transform:'translateY(0)'}], {duration: 380}); floor = n; await wait(250);
       car.classList.remove('closed'); await wait(fast ? 250 : 450); light(n, true); await wait(fast ? 500 : 1100); }
@@ -56,7 +60,7 @@
     if (innerWidth <= 760) { const r = car.getBoundingClientRect(); scrollTo(0, Math.max(0, scrollY + r.top + r.height / 2 - innerHeight / 2)); }
     let seen = false; try { seen = !!sessionStorage.getItem('gl-intro'); sessionStorage.setItem('gl-intro', '1'); } catch (e) {}
     const it = document.getElementById('bIntro'), hn = document.querySelector('.bhint');
-    if (seen) { it && it.remove(); document.documentElement.classList.add('b-ready'); hn && hn.classList.add('on'); const h1 = B.querySelector('.b-h1'); h1 && h1.classList.add('on'); return; }
+    if (seen || CALM) { it && it.remove(); document.documentElement.classList.add('b-ready'); hn && hn.classList.add('on'); const h1 = B.querySelector('.b-h1'); h1 && h1.classList.add('on'); return; }
     document.documentElement.classList.add('b-intro', 'b-nologo');
     const fl = document.getElementById('bFly'), wm = document.querySelector('.hdr-logo');
     await wait(150); it.classList.add('s1'); await wait(2100); it.classList.add('s2'); fl.style.opacity = '1'; await wait(700);

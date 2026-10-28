@@ -1,5 +1,5 @@
 /* ---------- Отправка заявок на сервер (send.php) ---------- */
-window.glRoot = (function(){ const a=document.querySelector('.hdr-logo'); try{ return new URL(a?a.getAttribute('href'):'./', location.href).href; }catch(e){ return '/'; } })();
+window.glRoot = (function(){ const a=document.querySelector('.hdr-logo'); try{ return new URL(a?a.getAttribute('href'):'./', location.href).href.replace(/index\.html$/, ''); }catch(e){ return '/'; } })();
 window.glSend = function(form, st, items){
   if (form.dataset.busy) return; form.dataset.busy = '1'; st.textContent = 'Отправляем…';
   const fd = new FormData(form); fd.delete('agree'); fd.append('agree', form.agree && form.agree.checked ? 'yes' : 'no');
@@ -7,7 +7,7 @@ window.glSend = function(form, st, items){
   if (items && items.length) fd.append('items', JSON.stringify(items));
   fetch(window.glRoot + 'send.php', { method: 'POST', body: fd })
     .then(r => r.json().catch(() => ({ ok: false })))
-    .then(d => { if (d && d.ok) { st.textContent = 'Заявка отправлена. Перезвоним в течение часа.'; form.reset(); } else { st.textContent = (d && d.error) || 'Не удалось отправить. Позвоните: +7 985 481-72-28'; } })
+    .then(d => { if (d && d.ok) { st.textContent = 'Заявка отправлена. Перезвоним в течение часа.'; if (window.glGoal) { window.glGoal('lead', { form: form.id || form.className }); if (form.id === 'photoForm') window.glGoal('lead_photo'); } form.reset(); } else { st.textContent = (d && d.error) || 'Не удалось отправить. Позвоните: +7 985 481-72-28'; } })
     .catch(() => { st.textContent = 'Не удалось отправить. Позвоните: +7 985 481-72-28'; })
     .finally(() => { delete form.dataset.busy; });
 };
@@ -344,8 +344,8 @@ window.glSend = function(form, st, items){
   /* ---------- Переход между разделами — поездка: двери закрываются на этом этаже, свет по шву,
      табло меняет этаж, на новой странице открываются двери нужной кабины. Внутри раздела — мягко, без лифта ---------- */
   const nl = document.getElementById('navlift');
-  const FL = { '': 1, 'o-kompanii': 2, 'obekty': 2, 'zapchasti': 3, 'korzina': 3, 'dostavka': 3, 'servis': 4, 'ustroystvo': 4, 'kontakty': 5 };
-  const NAMES = { 1: ['Этаж первый', 'Холл'], 2: ['Этаж второй', 'О компании'], 3: ['Этаж третий', 'Скобяная лавка'], 4: ['Этаж четвёртый', 'Монтаж и сервис'], 5: ['Этаж пятый', 'Контакты'] };
+  const FL = { '': 1, 'o-kompanii': 1, 'obekty': 1, 'zapchasti': 2, 'korzina': 2, 'dostavka': 2, 'podbor-po-foto': 2, 'servis': 3, 'ustroystvo': 3, 'kontakty': 4, 'holl': 4 };
+  const NAMES = { 1: ['Этаж первый', 'О компании'], 2: ['Этаж второй', 'Запчасти'], 3: ['Этаж третий', 'Монтаж и сервис'], 4: ['Этаж четвёртый', 'Контакты'] };
   const base = new URL((document.querySelector('.hdr-logo') || {}).href || './', location.href).pathname;
   const sect = u => { const p = new URL(u, location.href).pathname; return p.startsWith(base) ? p.slice(base.length).split('/')[0] : p; };
   const floorOf = u => { const m = String(u).match(/#floor-(\d)/); if (m) return +m[1]; return FL[sect(u)] || 1; };
@@ -509,7 +509,7 @@ window.glSend = function(form, st, items){
       ? cart.map((i, k) => `<div class="line"><div><b>${esc(i.b)} ${esc(i.a)}</b><span>${esc(i.n)}</span></div>
           <div class="qty"><button type="button" data-q="${k}" data-d="-1" aria-label="Меньше">−</button><output>${i.q}</output><button type="button" data-q="${k}" data-d="1" aria-label="Больше">+</button></div>
           <button class="rm" type="button" data-rm="${k}" aria-label="Убрать">×</button></div>`).join('')
-      : `<div class="drawer-empty">${(document.getElementById('emEmpty') || {}).innerHTML || ''}<p>Заявка пуста. Добавьте детали из лавки или опишите задачу и пришлите фото — подберём сами.</p></div>`;
+      : `<div class="drawer-empty">${(document.getElementById('emEmpty') || {}).innerHTML || ''}<p>Заявка пуста. Добавьте детали из каталога или опишите задачу и пришлите фото — подберём сами.</p></div>`;
     document.querySelectorAll('.cart-ico').forEach(ic => ic.classList.toggle('has', total > 0));
     document.querySelectorAll('[data-add]').forEach(b => {
       const d = JSON.parse(b.dataset.add), inCart = cart.some(i => i.s === d.s && i.a === d.a);
@@ -606,7 +606,7 @@ window.glSend = function(form, st, items){
       e.preventDefault();
       const st = f.querySelector('.cp-status');
       if (!f.phone.value.trim()) { st.textContent = 'Укажите телефон — по нему перезвоним.'; f.phone.focus(); return; }
-      if (!cart.length && !f.photo.files[0] && !f.msg.value.trim()) { st.textContent = 'Добавьте деталь из лавки, фото или опишите задачу.'; return; }
+      if (!cart.length && !f.photo.files[0] && !f.msg.value.trim()) { st.textContent = 'Добавьте деталь из каталога, фото или опишите задачу.'; return; }
       if (!f.agree.checked) { st.textContent = 'Отметьте согласие на обработку данных.'; return; }
       const num = 'GL-' + String(Date.now()).slice(-5);
       const done = document.getElementById('cpDone');
@@ -781,7 +781,7 @@ document.querySelectorAll('.ch-t,.mc-t,.sec-t,.cta2 h2,.h2,.dp-h h2,.mx-t').forE
   ov.querySelector('.srch-x').addEventListener('click', close);
   addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   ov.querySelector('form').addEventListener('submit', e => { e.preventDefault(); const q = ov.querySelector('input').value.trim(); if (!q) return; const l = q.toLowerCase();
-    const SRV = [['монтаж','servis/montazh/'],['обслуж','servis/obsluzhivanie/'],['ремонт','servis/obsluzhivanie/'],['пусконалад','servis/puskonaladka/'],['наладк','servis/puskonaladka/'],['подбор лифт','servis/podbor/'],['доставк','dostavka/'],['оплат','dostavka/'],['контакт','kontakty/']];
+    const SRV = [['монтаж','servis/montazh/'],['обслуж','servis/obsluzhivanie/'],['ремонт','servis/obsluzhivanie/'],['пусконалад','servis/pusk/'],['наладк','servis/pusk/'],['подбор лифт','servis/podbor/'],['доставк','dostavka/'],['оплат','dostavka/'],['контакт','kontakty/']];
     const hit = SRV.find(x => l.includes(x[0])); if (hit) { location.href = base + hit[1]; return; }
     const ESC = ['эскалат','поруч','ступен','гребён','гребен','фриз','травол'];
     location.href = base + (ESC.some(w => l.includes(w)) ? 'zapchasti/eskalatory/' : 'zapchasti/') + '?q=' + encodeURIComponent(q); });
@@ -789,7 +789,7 @@ document.querySelectorAll('.ch-t,.mc-t,.sec-t,.cta2 h2,.h2,.dp-h h2,.mx-t').forE
 
 /* ---------- Переходы между этажами — через здание на главной ---------- */
 (() => {
-  const SLUGS = { 'holl': 1, 'o-kompanii': 2, 'zapchasti': 3, 'servis': 4, 'kontakty': 5 };
+  const SLUGS = { 'o-kompanii': 1, 'zapchasti': 2, 'servis': 3, 'kontakty': 4, 'holl': 4 };
   const logo = document.querySelector('.hdr-logo'); if (!logo) return;
   const root = new URL(logo.getAttribute('href') || './', location.href);
   const floorOfUrl = u => { if (u.origin !== root.origin || !u.pathname.startsWith(root.pathname)) return -1;
@@ -808,7 +808,8 @@ document.querySelectorAll('.ch-t,.mc-t,.sec-t,.cta2 h2,.h2,.dp-h h2,.mx-t').forE
   if (came) { const c = curtain(); hole(c, 0); D.classList.remove('iris-in');
     const open = async () => { await run(c, 0, R(), 480); c.remove(); };
     let _op=0; const go1=()=>{ if(_op) return; _op=1; setTimeout(open, 40); }; if (document.readyState !== 'loading') go1(); else addEventListener('DOMContentLoaded', go1); setTimeout(go1, 700); }
-  const irisOut = async href => { try { sessionStorage.setItem('gl-iris', '1'); } catch (e) {} const c = curtain(); hole(c, R()); await run(c, R(), 0, 420); setTimeout(() => { location.href = href; }, 60); };
+  const calmOn = () => { try { return localStorage.getItem('gl-calm') === '1' || matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } };
+  const irisOut = async href => { if (calmOn()) { location.href = href; return; } try { sessionStorage.setItem('gl-iris', '1'); } catch (e) {} const c = curtain(); hole(c, R()); await run(c, R(), 0, 420); setTimeout(() => { location.href = href; }, 60); };
   window.__irisOut = href => irisOut(href);
   window.addEventListener('click', e => {
     if (e.target.closest && e.target.closest('[data-search]')) return;
@@ -883,7 +884,7 @@ document.querySelectorAll('.ch-t,.mc-t,.sec-t,.cta2 h2,.h2,.dp-h h2,.mx-t').forE
   }
   // одна кнопка заявки справа внизу (ПК), с надписью и мягкой пульсацией
   if (!isHome) { const src = document.querySelector('[data-cart-open]');
-    if (src) { const b = document.createElement('button'); b.type = 'button'; b.className = 'cta-fix'; b.innerHTML = '<span>Обсудить<br>объект</span>';
+    if (src) { const b = document.createElement('button'); b.type = 'button'; b.className = 'cta-fix'; b.innerHTML = '<span>Заявка</span>'; b.setAttribute('aria-label', 'Оставить заявку');
       b.addEventListener('click', () => src.click()); document.body.appendChild(b); D.classList.add('has-ctafix'); } }
   // поиск по сайту: лупа в шапке
   const openSearch = async () => {
@@ -947,7 +948,7 @@ document.querySelectorAll('.esc-s').forEach(s=>{const g=s.querySelector('.esc-gr
  const st=document.getElementById('bStage'), B=document.getElementById('bld'); if(!st||!B) return;
  const h1=document.querySelector('h1.b-h1'); const sig=document.createElement('p'); sig.className='m-sig'; sig.textContent=h1?h1.textContent.replace(/\s+/g,' ').trim():'GeniLift — запчасти, монтаж и обслуживание лифтов и эскалаторов · Москва и область'; document.body.appendChild(sig);
  const place=()=>{ sig.style.top=(st.offsetTop+st.offsetHeight+10)+'px'; }; place(); addEventListener('resize',place); setTimeout(place,1500); setTimeout(place,5000);
- if(sessionStorage.getItem('gl-tapped')) return; const fc=B.querySelector('.fc[data-f="3"]'); if(!fc) return;
+ if(sessionStorage.getItem('gl-tapped')) return; const fc=B.querySelector('.fc[data-f="2"]'); if(!fc) return;
  const t=document.createElement('span'); t.className='tap-hint'; t.innerHTML='<i></i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10h.5V8.5a1.5 1.5 0 0 1 3 0V10h.5V9.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-.7a6 6 0 0 1-4.6-2.2L4.4 15.6a1.4 1.4 0 0 1 2-2L9 15.5z"/></svg>';
  setTimeout(()=>{ t.style.left=(fc.offsetLeft+fc.offsetWidth*.62)+'px'; t.style.top=(fc.offsetTop+fc.offsetHeight*.55)+'px'; B.appendChild(t); requestAnimationFrame(()=>t.classList.add('on')); },4200);
  B.addEventListener('click',()=>{ try{sessionStorage.setItem('gl-tapped','1')}catch(e){} t.remove(); },{once:true}); })();
@@ -955,13 +956,14 @@ document.querySelectorAll('.esc-s').forEach(s=>{const g=s.querySelector('.esc-gr
 /* Поиск: подсказки при вводе */
 (function(){ const ov=document.querySelector('.srch-ov'); if(!ov) return; const inp=ov.querySelector('input'), form=ov.querySelector('form'); const logo=document.querySelector('.hdr-logo'); const base=logo?logo.getAttribute('href'):'./';
  const box=document.createElement('div'); box.className='srch-sug'; form.after(box); let data=null;
- const SRV=[['Монтаж лифтов','servis/montazh/'],['Обслуживание лифтов и эскалаторов','servis/obsluzhivanie/'],['Пусконаладка','servis/puskonaladka/'],['Подбор лифта','servis/podbor/'],['Доставка и оплата','dostavka/'],['Контакты','kontakty/']];
+ const SRV=[['Подбор запчасти по фото','podbor-po-foto/'],['Монтаж лифтов','servis/montazh/'],['Обслуживание лифтов и эскалаторов','servis/obsluzhivanie/'],['Пусконаладка','servis/pusk/'],['Подбор лифта','servis/podbor/'],['Доставка и оплата','dostavka/'],['Контакты','kontakty/']];
  const BR=['Hitachi','KONE','OTIS','LG Sigma','Mitsubishi','ThyssenKrupp','Hyundai','Schindler','Gustav Wolf','Draka','Fujitec','Toshiba','SJEC','Canny','Yungtay'];
  const load=()=>data?Promise.resolve(data):fetch(base+'assets/search.json').then(r=>r.json()).then(d=>data=d).catch(()=>data={p:[],s:[]});
  const esc=t=>t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
  inp.addEventListener('input',()=>{ const q=inp.value.trim().toLowerCase(); if(q.length<2){box.innerHTML='';return;} load().then(d=>{ const out=[];
   d.s.filter(x=>x.t.toLowerCase().includes(q)).slice(0,3).forEach(x=>out.push([x.t,x.k,x.u]));
-  BR.filter(b=>b.toLowerCase().includes(q)).slice(0,2).forEach(b=>out.push([b,'Марка','zapchasti/?q='+encodeURIComponent(b)]));
+  const BP={'Hitachi':'hitachi','KONE':'kone','OTIS':'otis','LG Sigma':'lg-sigma','Mitsubishi':'mitsubishi','ThyssenKrupp':'thyssenkrupp','Hyundai':'hyundai','Schindler':'schindler','Gustav Wolf':'gustav-wolf','Draka':'draka','Fujitec':'fujitec'};
+  BR.filter(b=>b.toLowerCase().includes(q)).slice(0,2).forEach(b=>out.push([b,'Марка',BP[b]?'brendy/'+BP[b]+'/':'zapchasti/?q='+encodeURIComponent(b)]));
   SRV.filter(x=>x[0].toLowerCase().includes(q)).slice(0,2).forEach(x=>out.push([x[0],'Услуга',x[1]]));
   d.p.filter(x=>x.t.toLowerCase().includes(q)).slice(0,8-out.length).forEach(x=>out.push([x.t,'Деталь',x.u]));
   box.innerHTML=out.slice(0,8).map(o=>'<a href="'+base+o[2]+'"><span>'+esc(o[0])+'</span><em>'+o[1]+'</em></a>').join('')||'<p>Ничего не нашли — нажмите «Найти» или пришлите фото шильдика</p>'; }); });
@@ -999,7 +1001,7 @@ document.querySelectorAll('form.order, form[data-ask]').forEach(f=>{ if(f.queryS
 (function(){ const s=document.createElement('script'); s.src=window.glRoot+'config.js'; s.onload=s.onerror=init; document.head.appendChild(s);
  function metrika(){ const id=(window.GL_CONFIG||{}).metrika; if(!id||window.ym) return;
   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
-  window.ym(id,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:false}); }
+  window.ym(id,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:!!(window.GL_CONFIG||{}).metrikaWebvisor}); }
  function init(){ let c=null; try{ c=localStorage.getItem('gl-cookie'); }catch(e){}
   if(c==='all'){ metrika(); return; } if(c==='need') return;
   const cfg=window.GL_CONFIG||{}; const b=document.createElement('div'); b.className='ck-bar'; b.setAttribute('role','dialog'); b.setAttribute('aria-label','Файлы cookie');

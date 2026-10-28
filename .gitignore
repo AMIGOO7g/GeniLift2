@@ -1,0 +1,6 @@
+# данные админки: пароль, каталог, копии, журнал заявок
+admin/data/*.json.php
+admin/data/setup-code.php
+admin/data/backup/
+admin/data/*.tmp
+_leads/

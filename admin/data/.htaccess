@@ -1,0 +1,7 @@
+# Закрыто от интернета (Apache). Для nginx: location ^~ /admin/data/ { deny all; }
+<IfModule mod_authz_core.c>
+Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+Deny from all
+</IfModule>
