@@ -20,14 +20,21 @@
     var left = document.createElement('div');
     left.className = 'gl-hleft';
     if (FL[seg] && !home) {
+      var cur = FL[seg][0], prev = cur;
+      try { var pv = parseInt(sessionStorage.getItem('gl-fl'), 10); if (pv >= 1 && pv <= 4) prev = pv; sessionStorage.setItem('gl-fl', String(cur)); } catch (e) { /* без хранилища — без анимации */ }
       var fl = document.createElement('a');
-      fl.className = 'gl-floor'; fl.href = '#'; fl.setAttribute('aria-label', 'Этаж ' + FL[seg][0] + ': ' + FL[seg][1] + '. Открыть меню этажей');
-      fl.innerHTML = '<b>0' + FL[seg][0] + '</b><span>' + FL[seg][1] + '</span>';
+      fl.className = 'gl-floor'; fl.href = '#'; fl.setAttribute('aria-label', 'Этаж ' + cur + ': ' + FL[seg][1] + '. Открыть меню этажей');
+      var dir = cur > prev ? 'up' : (cur < prev ? 'down' : '');
+      var pad = function (n) { return '0' + n; };
+      var col = dir === 'up' ? '<i>' + pad(prev) + '</i><i>' + pad(cur) + '</i>' : (dir === 'down' ? '<i>' + pad(cur) + '</i><i>' + pad(prev) + '</i>' : '<i>' + pad(cur) + '</i>');
+      fl.innerHTML = '<span class="gf-d"><span class="gf-col' + (dir ? ' go-' + dir : '') + '">' + col + '</span></span>' + (dir ? '<b class="gf-ar ' + dir + '" aria-hidden="true"></b>' : '') + '<span class="gf-t">' + FL[seg][1] + '</span>';
       fl.addEventListener('click', function (e) { e.preventDefault(); var m = document.querySelector('[data-menu-open]'); if (m) m.click(); });
       left.appendChild(fl);
+      if (dir) requestAnimationFrame(function () { requestAnimationFrame(function () { fl.querySelector('.gf-col').classList.add('run'); setTimeout(function () { var ar = fl.querySelector('.gf-ar'); if (ar) ar.classList.add('off'); }, 1300); }); });
     }
     var sos = document.createElement('a');
-    sos.className = 'gl-sos'; sos.href = 'tel:+79854817228'; sos.innerHTML = '<i></i>Авария 24/7'; sos.setAttribute('aria-label', 'Аварийный вызов лифта 24/7');
+    sos.className = 'gl-sos'; sos.href = 'tel:+79854817228'; sos.setAttribute('aria-label', 'Аварийный вызов лифта 24/7');
+    sos.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v3.5L4.5 16h15L18 12.5V9a6 6 0 0 0-6-6z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg><span>Авария 24/7</span>';
     left.appendChild(sos);
     inner.insertBefore(left, inner.firstChild);
   }

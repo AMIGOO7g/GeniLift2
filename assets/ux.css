@@ -35,16 +35,27 @@ html body .crumbs a{display:inline-flex;align-items:center;min-height:32px}
 /* ---------- шапка: табло этажа и аварийный вызов слева, в свободном месте ---------- */
 .hdr2-in{position:relative}
 .gl-hleft{position:absolute;left:40px;top:50%;transform:translateY(-50%);display:none;align-items:center;gap:10px;z-index:3}
-.gl-floor{display:inline-flex;align-items:center;gap:9px;height:40px;padding:0 12px 0 10px;border:1px solid rgba(242,194,48,.55);background:#0D0C0B;color:#F2C230;text-decoration:none;cursor:pointer;font:inherit}
-.gl-floor b{font:800 20px/1 "Jost",var(--sans);letter-spacing:.06em;color:#FFD457;text-shadow:0 0 8px rgba(255,212,87,.35);font-variant-numeric:tabular-nums}
-.gl-floor span{font:600 11.5px/1.1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#EDE3D1;max-width:96px}
-.gl-floor:hover{border-color:#FFD457}
-.gl-sos{display:none;align-items:center;gap:8px;height:40px;padding:0 14px;background:#A3271F;color:#F6EBD5;text-decoration:none;font:700 12px var(--sans);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
-.gl-sos i{width:9px;height:9px;border-radius:50%;background:#FFD457;animation:sosb 1.8s ease-in-out infinite}
-.gl-sos:hover{background:#8b1f19}
-@keyframes sosb{0%,100%{opacity:1}50%{opacity:.25}}
+.gl-floor{display:inline-flex;align-items:center;gap:11px;height:44px;padding:0 18px 0 7px;border-radius:22px;background:linear-gradient(180deg,#1d1914,#0d0c0b);color:#EDE3D1;text-decoration:none;cursor:pointer;box-shadow:0 0 0 1px rgba(242,194,48,.75),0 0 0 4px rgba(242,194,48,.13),inset 0 1px 0 rgba(255,255,255,.09);transition:box-shadow .3s,transform .3s}
+.gl-floor:hover,.gl-floor:focus-visible{transform:translateY(-1px);box-shadow:0 0 0 1px #FFD457,0 0 0 4px rgba(255,212,87,.28),0 8px 20px rgba(0,0,0,.35)}
+.gf-d{position:relative;display:block;width:48px;height:32px;border-radius:16px;background:#000;box-shadow:inset 0 0 0 1px rgba(255,212,87,.4),inset 0 0 10px rgba(255,212,87,.12);overflow:hidden}
+.gf-col{display:flex;flex-direction:column;transition:transform .75s cubic-bezier(.65,0,.35,1)}
+.gf-col i{display:block;height:32px;line-height:32px;text-align:center;font:800 19px/32px "Jost",var(--sans);font-style:normal;letter-spacing:.08em;color:#FFD457;text-shadow:0 0 9px rgba(255,212,87,.55);font-variant-numeric:tabular-nums}
+.gf-col.go-up{transform:translateY(0)}.gf-col.go-up.run{transform:translateY(-32px)}
+.gf-col.go-down{transform:translateY(-32px)}.gf-col.go-down.run{transform:translateY(0)}
+.gf-ar{display:block;width:0;height:0;margin-left:-3px;border-left:5px solid transparent;border-right:5px solid transparent;transition:opacity .5s}
+.gf-ar.up{border-bottom:8px solid #FFD457;animation:gfar 1s ease-in-out infinite}
+.gf-ar.down{border-top:8px solid #FFD457;animation:gfar 1s ease-in-out infinite}
+.gf-ar.off{opacity:0}
+@keyframes gfar{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.gf-ar.down{animation-name:gfard}@keyframes gfard{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.gf-t{font:700 12px/1.1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#EDE3D1;max-width:104px}
+.gl-sos{display:none;align-items:center;gap:9px;height:44px;padding:0 20px 0 14px;border-radius:22px;background:linear-gradient(180deg,#d13a2a,#8f1e15);color:#fff4e0;text-decoration:none;font:800 12.5px var(--sans);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 0 0 0 rgba(224,72,50,.55);animation:sorg 2.8s ease-out infinite;transition:transform .3s}
+.gl-sos:hover{transform:translateY(-1px);animation-play-state:paused;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 8px 20px rgba(143,30,21,.5)}
+.gl-sos svg{width:19px;height:19px;fill:none;stroke:#fff4e0;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transform-origin:50% 8%;animation:sobell 6s ease-in-out infinite}
+@keyframes sorg{0%{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 0 0 0 rgba(224,72,50,.5)}70%,100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 0 0 13px rgba(224,72,50,0)}}
+@keyframes sobell{0%,84%,100%{transform:rotate(0)}86%{transform:rotate(16deg)}88%{transform:rotate(-13deg)}90%{transform:rotate(9deg)}92%{transform:rotate(-6deg)}94%{transform:rotate(3deg)}}
 @media (min-width:1160px){.gl-hleft{display:flex}}
-@media (min-width:1400px){.gl-sos{display:inline-flex}}
+@media (min-width:1580px){.gl-sos{display:inline-flex}}
 
 /* ---------- режим «без анимации» ---------- */
 .calm-t{display:block;width:100%;margin:10px 0 0;padding:10px 0;border:0;border-top:1px solid rgba(237,227,209,.18);background:none;color:#ABA092;font:500 13px var(--sans);text-align:left;cursor:pointer}
@@ -55,11 +66,9 @@ html.calm *,html.calm *::before,html.calm *::after{animation-duration:.01ms!impo
 body.pg-shop .title-prod .psign{padding-top:18px!important;padding-bottom:22px!important}
 body.pg-shop .title-prod .mx-sub{margin-top:8px!important}
 @media (max-width:760px){
- body.pg-shop .title-prod{margin-bottom:6px}
  body.pg-shop .title-prod .ps-t{font-size:clamp(30px,10vw,44px)!important;line-height:1.05!important}
  body.pg-shop .title-prod .mx-sub{font-size:15px!important;line-height:1.45!important}
  body.pg-shop .title-prod .psign{margin-top:0!important}
- body.pg-shop .card-k{margin:12px 0!important}
 }
 .mb-req{display:flex;align-items:center;justify-content:center;height:56px;background:#F2C230;color:#1a1300!important;font:700 12px var(--sans);letter-spacing:.12em;text-transform:uppercase;border:0;cursor:pointer}
 
@@ -98,20 +107,20 @@ body.live-flt .more-b{display:none!important}
 .cat-tools select{min-height:40px;padding:0 12px;border:1px solid rgba(246,235,213,.55);background:rgba(0,0,0,.25);color:#F6EBD5;font:500 14px var(--sans);border-radius:0}
 .cat-tools select option{color:#111}
 
-/* ---------- каталог: поиск по схеме лифта ---------- */
-.byparts{background:#F1EADD;color:#2A1823;padding:56px 20px 44px;text-align:center}
-.byparts .bp-in{max-width:980px;margin:0 auto}
-.byparts .bp-k{margin:0 0 6px;font:700 12px var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#A3271F}
-.byparts .bp-t{margin:0 0 8px;font:900 clamp(26px,3.4vw,40px)/1.1 var(--fut,var(--sans))!important;letter-spacing:.06em!important;text-transform:uppercase;color:#2A1823}
-.byparts .bp-s{margin:0 0 22px;font-size:16px;color:#5a463e}
-.byparts .viz{margin:0 auto}
-.bp-list{list-style:none;margin:26px auto 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 14px;text-align:left}
-.bp-list a{display:flex;gap:12px;align-items:center;min-height:56px;padding:8px 12px;border:1px solid rgba(42,24,35,.28);background:#fffaf0;color:#2A1823;text-decoration:none}
-.bp-list a:hover,.bp-list a:focus-visible{border-color:#A3271F;background:#fff}
-.bp-list b{flex:0 0 32px;height:32px;display:grid;place-items:center;border:1.5px solid #1E4A3F;border-radius:50%;font:800 12px var(--fut,var(--sans));color:#1E4A3F}
-.bp-list span{display:flex;flex-direction:column;font:700 14px/1.25 var(--fut,var(--sans));letter-spacing:.02em}
-.bp-list em{font-style:normal;font:500 12.5px var(--sans);color:#7a5a50;margin-top:2px}
-@media (max-width:760px){.bp-list{grid-template-columns:1fr}.byparts{padding:44px 14px 34px}}
+/* ---------- каталог: поиск по схеме лифта (на тёмном фоне страницы, рисунок сливается с фоном) ---------- */
+.byparts{background:#3E4127;color:#F6EBD5;padding:60px 20px 50px;text-align:center}
+.byparts .bp-in{max-width:1000px;margin:0 auto}
+.byparts .bp-k{margin:0 0 8px;font:700 13px var(--sans);letter-spacing:.26em;text-transform:uppercase;color:#E8B53A}
+.byparts .bp-t{margin:0 0 10px;font:900 clamp(28px,3.6vw,44px)/1.1 var(--fut,var(--sans))!important;letter-spacing:.06em!important;text-transform:uppercase;color:#F6EBD5}
+.byparts .bp-s{margin:0 0 26px;font-size:17px;color:rgba(246,235,213,.85)}
+.byparts .viz{margin:0 auto;background:transparent!important;border:0!important;box-shadow:none!important;padding:0}
+.bp-list{list-style:none;margin:30px auto 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 16px;text-align:left}
+.bp-list a{display:flex;gap:14px;align-items:center;min-height:62px;padding:10px 14px;border:1px solid rgba(232,181,58,.45);background:rgba(0,0,0,.14);color:#F6EBD5;text-decoration:none}
+.bp-list a:hover,.bp-list a:focus-visible{border-color:#E8B53A;background:rgba(232,181,58,.12)}
+.bp-list b{flex:0 0 34px;height:34px;display:grid;place-items:center;border:1.5px solid #E8B53A;border-radius:50%;font:800 13px var(--fut,var(--sans));color:#E8B53A}
+.bp-list span{display:flex;flex-direction:column;font:700 15px/1.25 var(--fut,var(--sans));letter-spacing:.02em}
+.bp-list em{font-style:normal;font:500 13px var(--sans);color:rgba(246,235,213,.7);margin-top:2px}
+@media (max-width:760px){.bp-list{grid-template-columns:1fr}.byparts{padding:46px 14px 36px}}
 
 /* ---------- страницы марок и разделов ---------- */
 body.pg-brand .bp-stat{max-width:820px;margin:18px auto 0;text-align:center;font:400 17px/1.55 var(--fut,var(--sans));color:#F6EBD5}
@@ -146,7 +155,7 @@ html body .hdr-logo i{font-size:9px!important;letter-spacing:.12em!important}
 
 /* ---------- телефон: верхний блок страниц компактнее (больше полезного на первом экране) ---------- */
 @media (max-width:760px){
- html body.pg .page > .wrap > .psign,html body.pg .page > .wrap > .psign.ttl-band,html body.pg .psign{padding:22px 16px 24px!important;margin-top:20px!important;margin-bottom:34px!important}
+ html body.pg .page > .wrap > .psign,html body.pg .page > .wrap > .psign.ttl-band,html body.pg .psign{padding:22px 16px 24px!important;margin-top:20px!important;margin-bottom:60px!important}
  html body .psign .mx-bar{margin-top:12px!important;transform:scale(.85)}
  html body .psign .mx-sub{margin-top:10px!important;font-size:15px!important;line-height:1.42!important}
  html body .psign .ttl-icons{margin-top:14px!important}
@@ -166,3 +175,31 @@ html body .hdr-logo i{font-size:9px!important;letter-spacing:.12em!important}
  html body .crumbs li:not(:nth-last-child(-n+2)){display:none}
  html body .crumbs li:nth-last-child(2)::before{display:none!important}
 }
+
+/* ---------- «Контакты»: плитки холла — все ряды на одной высоте ---------- */
+.hall-desk .desk{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto auto auto auto auto;column-gap:22px;row-gap:0!important;align-items:stretch}
+.hall-desk .desk-c,.hall-desk .desk-sos{display:grid!important;grid-row:span 5;grid-template-rows:subgrid!important;justify-items:center;align-items:center;row-gap:14px;text-align:center}
+.hall-desk .desk-c>svg,.hall-desk .desk-c>.em{align-self:end}
+.hall-desk .desk-k{align-self:start}
+.hall-desk .desk-t{align-self:start;min-height:0!important}
+.hall-desk .desk-search,.hall-desk .desk-c .abtn{width:100%;height:54px;align-self:center}
+.hall-desk .desk-c>.desk-link,.hall-desk .desk-c>.desk-links{align-self:start}
+@media (max-width:900px){.hall-desk .desk{grid-template-columns:minmax(0,1fr);grid-template-rows:none}.hall-desk .desk-c,.hall-desk .desk-sos{grid-row:auto;grid-template-rows:none!important;margin-bottom:18px}}
+
+/* ---------- «Марка» и «Раздел» в каталоге на телефоне: одинаковый шрифт ---------- */
+html body .m-acc .acc-t span,html body .brandstrip .bs-k{font:800 14px var(--fut,var(--sans))!important;letter-spacing:.22em!important;text-transform:uppercase}
+html body .m-acc .acc-t i{font-size:15px!important}
+
+/* ---------- телефон: «Контакты» — значки мессенджеров, подвал по центру ---------- */
+@media (max-width:760px){
+ html body .psign .cb-acts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 6px;justify-items:center;max-width:380px;margin-left:auto;margin-right:auto}
+ html body .psign .cb-acts .em-btn span{font-size:13px!important;letter-spacing:.06em!important;font-weight:700}
+ html body .ftr-c2 .f2-brand,html body .ftr-c2 .f2-col,html body .ftr-c2 .f2-contact,html body .ftr-c2 .f2-slog{text-align:center}
+ html body .ftr-c2 .f2-col a,html body .ftr-c2 .f2-contact a{justify-content:center;text-align:center}
+ html body .ftr-c2 .f2-icons{justify-content:center}
+}
+
+.shaftfig .sf-pt{width:30px;height:30px}
+
+/* подпись «Карточка детали» не должна попадать на границу тёмной полосы шапки (полоса уходит на 30px ниже заголовка) */
+body.pg-shop .card-k{margin-top:56px!important;position:relative;z-index:6}

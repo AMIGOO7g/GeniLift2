@@ -27,6 +27,22 @@
     Object.assign(B.style, { width: W0 * s + 'px', height: H0 * s + 'px', left: (innerWidth / 2 - (BOX.x0 + BOX.x1) / 2 * s) + 'px', top: (top + (ah - (BOX.y1 - BOX.y0) * s) / 2 - BOX.y0 * s) + 'px' });
     stage.style.top = '0px'; B.style.transform = 'none';
   }
+  /* панель поиска слева: ширина и поля считаются от свободного места до рукописных подписей здания */
+  function layoutPanel() {
+    const hp = document.querySelector('.hp'), root = document.documentElement;
+    if (!hp) return;
+    if (innerWidth < 1200) { root.classList.add('use-bar'); return; }
+    root.classList.remove('use-bar'); B.style.setProperty('--nw', innerWidth < 1700 ? '20cqw' : '24cqw'); fit();
+    let nl = Infinity;
+    document.querySelectorAll('#bld .note.L, #bld .bhint').forEach(n => {
+      if (getComputedStyle(n).display === 'none') return;
+      const r = document.createRange(); r.selectNodeContents(n); const b = r.getBoundingClientRect(); if (b.width > 0) nl = Math.min(nl, b.left);
+    });
+    const avail = nl - 52 - 32;                                   // справа отступ 52, слева 32
+    if (!(avail >= 262)) { root.classList.add('use-bar'); fit(); return; }
+    const w = Math.min(avail, 430), left = 36 + (avail - w) / 2, s = Math.max(.9, Math.min(1.3, w / 330));
+    hp.style.setProperty('--hp-w', w + 'px'); hp.style.setProperty('--hp-l', left + 'px'); hp.style.setProperty('--hp-s', s.toFixed(2));
+  }
   const carTop = n => { const h = car.getBoundingClientRect().height / B.getBoundingClientRect().height * H0; return (FLOORBOT[n] - h - 3) / H0 * 100; };
   function setPos(p) { pos = p; car.style.top = p + '%'; const k = (carTop(1) - p) / (carTop(1) - carTop(NF)); cw.style.top = (17.8 + k * 55.4) + '%'; wheel.style.transform = `rotate(${(p * 22).toFixed(2)}deg)`; }
   const needleTo = (n, inst) => { if (inst) ndl.style.transition = 'none'; ndl.style.transform = `rotate(${ANG[n]}deg)`; if (inst) { void ndl.offsetWidth; ndl.style.transition = ''; } };
@@ -53,10 +69,10 @@
   }
   window.__bldGo = go;
   B.querySelectorAll('.pq,.hit,.note').forEach(e => e.addEventListener('click', ev => { ev.preventDefault(); go(+e.dataset.f); }));
-  addEventListener('resize', () => { if (!busy) { fit(); setPos(carTop(floor)); } fitRoom(); });
+  addEventListener('resize', () => { if (!busy) { fit(); layoutPanel(); fit(); setPos(carTop(floor)); } fitRoom(); });
   addEventListener('pageshow', e => { if (e.persisted) { busy = false; stage.classList.remove('left'); roomv.classList.remove('in', 'show'); } });
   async function start() {
-    fit(); setPos(carTop(floor)); light(floor, true); needleTo(floor, true);
+    fit(); layoutPanel(); setPos(carTop(floor)); light(floor, true); needleTo(floor, true);
     if (innerWidth <= 760) { const r = car.getBoundingClientRect(); scrollTo(0, Math.max(0, scrollY + r.top + r.height / 2 - innerHeight / 2)); }
     let seen = false; try { seen = !!sessionStorage.getItem('gl-intro'); sessionStorage.setItem('gl-intro', '1'); } catch (e) {}
     const it = document.getElementById('bIntro'), hn = document.querySelector('.bhint');

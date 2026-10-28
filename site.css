@@ -1,13 +1,13 @@
-@font-face{font-family:'Jost';font-weight:800;font-display:swap;src:url(assets/fonts/jost-cyrillic-800-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
-@font-face{font-family:'Jost';font-weight:800;font-display:swap;src:url(assets/fonts/jost-latin-800-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Jost';font-weight:900;font-display:swap;src:url(assets/fonts/jost-cyrillic-900-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
-@font-face{font-family:'Jost';font-weight:900;font-display:swap;src:url(assets/fonts/jost-latin-900-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Jost';font-weight:400;font-display:swap;src:url(assets/fonts/jost-cyrillic-400-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
-@font-face{font-family:'Jost';font-weight:400;font-display:swap;src:url(assets/fonts/jost-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Jost';font-weight:500;font-display:swap;src:url(assets/fonts/jost-cyrillic-500-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
-@font-face{font-family:'Jost';font-weight:500;font-display:swap;src:url(assets/fonts/jost-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Jost';font-weight:600;font-display:swap;src:url(assets/fonts/jost-cyrillic-600-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
-@font-face{font-family:'Jost';font-weight:600;font-display:swap;src:url(assets/fonts/jost-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Jost';font-weight:800;font-display:block;src:url(assets/fonts/jost-cyrillic-800-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Jost';font-weight:800;font-display:block;src:url(assets/fonts/jost-latin-800-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Jost';font-weight:900;font-display:block;src:url(assets/fonts/jost-cyrillic-900-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Jost';font-weight:900;font-display:block;src:url(assets/fonts/jost-latin-900-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Jost';font-weight:400;font-display:block;src:url(assets/fonts/jost-cyrillic-400-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Jost';font-weight:400;font-display:block;src:url(assets/fonts/jost-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Jost';font-weight:500;font-display:block;src:url(assets/fonts/jost-cyrillic-500-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Jost';font-weight:500;font-display:block;src:url(assets/fonts/jost-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Jost';font-weight:600;font-display:block;src:url(assets/fonts/jost-cyrillic-600-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Jost';font-weight:600;font-display:block;src:url(assets/fonts/jost-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 /* GeniLift — тёмная система: тёплый чёрный, золото, кремовый текст, бордовый акцент */
 :root{
   --bg:#0D0C0B; --panel:#151311; --panel-2:#1B1815; --line:#2A2621; --line-2:#3B352E;
@@ -1716,8 +1716,8 @@ html{scroll-snap-type:none!important}
 @media (max-width:640px){.pg-misc .ps-t{font-size:clamp(20px,6vw,30px)!important;letter-spacing:.04em!important;margin-right:-.04em!important}}
 
 /* ===== v43: два материала — металл и бумага; два шрифта — Jost и машинописный ===== */
-@font-face{font-family:'PT Mono';font-weight:400;font-display:swap;src:url(assets/fonts/pt-mono-cyrillic-400-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
-@font-face{font-family:'PT Mono';font-weight:400;font-display:swap;src:url(assets/fonts/pt-mono-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:'PT Mono';font-weight:400;font-display:block;src:url(assets/fonts/pt-mono-cyrillic-400-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'PT Mono';font-weight:400;font-display:block;src:url(assets/fonts/pt-mono-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122,U+2212}
 :root{--head:"Jost","Futura","Century Gothic",sans-serif;--mono:"PT Mono","Courier New",monospace;--eng:#E7C784;--ink:#9E2B25}
 /* ---------- металл ---------- */
 .metal{position:relative;display:block;padding:14px;background:url(assets/tex/bronze.webp) 0 0/480px 100%,#685230;background-blend-mode:normal;border:1px solid #2a1d10;box-shadow:inset 0 1px 0 rgba(255,230,170,.25),inset 0 -2px 6px rgba(0,0,0,.35),0 14px 28px rgba(0,0,0,.35);color:var(--eng);text-decoration:none;text-shadow:0 1px 0 rgba(0,0,0,.6),0 -1px 0 rgba(255,236,190,.12)}
@@ -2430,8 +2430,8 @@ html.nav-in .navlift.go .sk-r{transform:translate3d(100%,0,0)}
 html.nav-in .navlift.go .sk-l,html.nav-in .navlift.go .sk-r{transition:transform .9s cubic-bezier(.65,0,.35,1)}
 
 /* ===== v51: сцены страниц — меню услуг, главы, диптих, арки, лавка-витрина ===== */
-@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-display:swap;src:url(assets/fonts/cormorant-garamond-cyrillic-500-italic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
-@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-display:swap;src:url(assets/fonts/cormorant-garamond-latin-500-italic.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-display:block;src:url(assets/fonts/cormorant-garamond-cyrillic-500-italic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-display:block;src:url(assets/fonts/cormorant-garamond-latin-500-italic.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
 :root{--it:"Cormorant Garamond","Georgia",serif}
 .it,.mc-row em,.eb-t em,.ch-note,.big3 em,.dip-text,.dr em,.ar-d,.sline p,.ring-i p,.perks span{font-family:var(--it)!important;font-style:italic!important;font-weight:500!important;letter-spacing:.01em!important;text-transform:none!important}
 /* общий приём: полоса на всю ширину */
@@ -3295,7 +3295,7 @@ html body.pg-del .psign p.mx-sub{color:#E8C988!important}
 /* ===== v62 ===== */
 /* плавное появление страницы — только при обычном открытии, не после лифта (иначе мигание) */
 body,html.fadein body,body.home{animation:none!important}
-html.fadein:not(.intro-on) body:not(.home){animation:pgIn .45s ease both!important}
+html.fadein:not(.intro-on) body:not(.home){animation:pgIn .22s ease both!important}
 /* створки заходят друг на друга — щели нет */
 .sk-l{width:50.8%!important}.sk-r{left:49.2%!important;width:50.8%!important}
 /* подвал — единый на всех страницах: «фундамент здания» */
@@ -3603,7 +3603,7 @@ html:not(.b-ready) body.home-bld .hdr{opacity:1}html.js:not(.b-ready) body.home-
 #bld a.pq,#bld a.hit,#bld a.note{text-decoration:none;display:block}
 #bld a.pq:hover .pt{text-decoration:underline;text-underline-offset:.18em;text-decoration-thickness:1px}
 /* рукописный шрифт: подсказка, подпись, пояснения в выносках */
-@font-face{font-family:'Bad Script';font-weight:400;font-style:normal;font-display:swap;src:url(assets/fonts/badscript-cyrillic-latin-400.woff2) format('woff2')}
+@font-face{font-family:'Bad Script';font-weight:400;font-style:normal;font-display:block;src:url(assets/fonts/badscript-cyrillic-latin-400.woff2) format('woff2')}
 :root{--hand:"Bad Script","Segoe Script",cursive}
 #bld .note i{font:400 max(14px,1.5cqw)/1.35 var(--hand)!important;color:#4A3A28!important}
 #bld .bhint{position:absolute;left:3%;top:6.53%;width:22cqw;margin:0;z-index:6;font:400 max(15px,1.75cqw)/1.25 var(--hand);color:#4A3A28;transform:rotate(-3deg);clip-path:inset(0 100% 0 0);transition:clip-path 1.4s cubic-bezier(.6,0,.3,1);pointer-events:none}

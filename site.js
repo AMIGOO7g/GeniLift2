@@ -805,11 +805,17 @@ document.querySelectorAll('.ch-t,.mc-t,.sec-t,.cta2 h2,.h2,.dp-h h2,.mx-t').forE
   const hole = (c, r) => { const m = `radial-gradient(circle at 50% 50%, transparent ${r}px, #000 ${r + .6}px)`; c.style.webkitMaskImage = m; c.style.maskImage = m; };
   const run = (c, from, to, D2) => new Promise(res => { const t0 = performance.now(); const st = now => { const k = Math.min(1, (now - t0) / D2); hole(c, from + (to - from) * ease(k)); if (k < 1) requestAnimationFrame(st); else res(); }; requestAnimationFrame(st); });
   let came = false; try { came = !!sessionStorage.getItem('gl-iris'); sessionStorage.removeItem('gl-iris'); } catch (e) {}
-  if (came) { const c = curtain(); hole(c, 0); D.classList.remove('iris-in');
-    const open = async () => { await run(c, 0, R(), 480); c.remove(); };
-    let _op=0; const go1=()=>{ if(_op) return; _op=1; setTimeout(open, 40); }; if (document.readyState !== 'loading') go1(); else addEventListener('DOMContentLoaded', go1); setTimeout(go1, 700); }
+  if (came) { const c = curtain(); hole(c, 0); D.classList.remove('fadein'); D.classList.remove('iris-in');   // без плавного проявления: открывается только диафрагма
+    const open = async () => { await run(c, 0, R(), 300); c.remove(); };
+    let _op=0; const go1=()=>{ if(_op) return; _op=1; open(); }; if (document.readyState !== 'loading') go1(); else addEventListener('DOMContentLoaded', go1); setTimeout(go1, 400); setTimeout(() => { const x = document.getElementById('irisC'); x && x.remove(); }, 2500); }
   const calmOn = () => { try { return localStorage.getItem('gl-calm') === '1' || matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } };
-  const irisOut = async href => { if (calmOn()) { location.href = href; return; } try { sessionStorage.setItem('gl-iris', '1'); } catch (e) {} const c = curtain(); hole(c, R()); await run(c, R(), 0, 420); setTimeout(() => { location.href = href; }, 60); };
+  const irisOut = async href => { if (calmOn()) { location.href = href; return; } try { sessionStorage.setItem('gl-iris', '1'); } catch (e) {}
+    const c = curtain(); hole(c, R()); setTimeout(() => { location.href = href; }, 110);          // переход начинается во время закрытия, а не после
+    await run(c, R(), 0, 240); };
+  /* страницу назад/вперёд из кэша показываем сразу, без чёрного экрана */
+  /* подгрузка следующей страницы при наведении и касании — переход быстрее */
+  (() => { const warm = new Set(); const go = e => { const a = e.target.closest && e.target.closest('a[href]'); if (!a || a.target || /^(tel:|mailto:|#)/.test(a.getAttribute('href'))) return; let u; try { u = new URL(a.href, location.href); } catch (x) { return; } if (u.origin !== location.origin || u.pathname === location.pathname || warm.has(u.pathname)) return; warm.add(u.pathname); fetch(u.pathname, { credentials: 'same-origin' }).catch(() => {}); };
+    document.addEventListener('mouseover', go, { passive: true }); document.addEventListener('touchstart', go, { passive: true }); })();
   window.__irisOut = href => irisOut(href);
   window.addEventListener('click', e => {
     if (e.target.closest && e.target.closest('[data-search]')) return;
