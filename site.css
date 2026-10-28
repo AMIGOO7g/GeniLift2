@@ -3602,7 +3602,7 @@ html:not(.b-ready) body.home-bld .hdr{opacity:1}html.js:not(.b-ready) body.home-
 #bld a.pq,#bld a.hit,#bld a.note{text-decoration:none;display:block}
 #bld a.pq:hover .pt{text-decoration:underline;text-underline-offset:.18em;text-decoration-thickness:1px}
 /* рукописный шрифт: подсказка, подпись, пояснения в выносках */
-@import url("https://fonts.googleapis.com/css2?family=Bad+Script&display=swap");
+@font-face{font-family:'Bad Script';font-weight:400;font-style:normal;font-display:swap;src:url(assets/fonts/badscript-cyrillic-latin-400.woff2) format('woff2')}
 :root{--hand:"Bad Script","Segoe Script",cursive}
 #bld .note i{font:400 max(14px,1.5cqw)/1.35 var(--hand)!important;color:#4A3A28!important}
 #bld .bhint{position:absolute;left:3%;top:5.5%;width:22cqw;margin:0;z-index:6;font:400 max(15px,1.75cqw)/1.25 var(--hand);color:#4A3A28;transform:rotate(-3deg);clip-path:inset(0 100% 0 0);transition:clip-path 1.4s cubic-bezier(.6,0,.3,1);pointer-events:none}
